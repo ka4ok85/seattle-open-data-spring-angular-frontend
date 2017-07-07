@@ -248,9 +248,9 @@ hr {
 ============================ */
 
 .home-section {
-    padding-top: 120px;
+    padding-top: 40px;
     padding-bottom: 110px;
-	display:block;
+    display:block;
     position:relative;
     z-index:120;
 }
@@ -676,40 +676,40 @@ a.btn:hover {
 }
 
 a,a:hover {
-	color: #d43076;
+	color: #00839A;
 }
 
 .intro .page-scroll a:hover {
-	color: #d43076;
+	color: #00839A;
 }
 
 .icon:hover .fa{
-	color: #d43076;
+	color: #00839A;
 }
 
 ul.nav li a:hover {
-	color: #d43076;
+	color: #00839A;
 }
 
 .owl-theme .owl-controls .owl-page.active span,
 .owl-theme .owl-controls.clickable .owl-page:hover span {
-    background-color: #d43076;
+    background-color: #00839A;
 }
 
 .bg-skin {
-	background: #d43076;
+	background: #00839A;
 }
 
 form#contact-form input:focus,form#contact-form select:focus,form#contact-form textarea:focus {
-	border-color: #d43076;
+	border-color: #00839A;
 }
 
 footer {
-    background-color: #d43076;
+    background-color: #00839A;
 }
 
 .btn-skin {
   color: #fff;
-  background-color: #d43076;
-  border-color: #d43076;
+  background-color: #00839A;
+  border-color: #00839A;
 }
