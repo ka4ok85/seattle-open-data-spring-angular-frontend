@@ -120,6 +120,9 @@ img.img-responsive {
 	font-weight: 700;
 }
 
+.navbar-custom ul.nav li.active a {
+    color: #00839A;
+}
 
 .navbar-custom .nav li a {
     -webkit-transition: background .3s ease-in-out;
