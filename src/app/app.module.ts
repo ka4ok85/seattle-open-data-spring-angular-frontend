@@ -13,6 +13,7 @@ import 'chart.js/src/chart.js';
 import {AboutComponent} from "./about.component";
 import {HomeComponent} from "./home.component";
 import {ByTypeComponent} from "./by-type.component";
+import {ByTypeSpecificComponent} from "./by-type-specific.component";
 import {routing} from "./app.routing";
 import {ProductDetailComponentParam} from "./product-param.component";
 
@@ -22,7 +23,7 @@ import {EnvironmentSpecificResolver} from "./core/services/environment-specific-
 
 @NgModule({
   declarations: [
-    AppComponent, HomeComponent, ByTypeComponent, AboutComponent, ProductDetailComponentParam
+    AppComponent, HomeComponent, ByTypeComponent, ByTypeSpecificComponent, AboutComponent, ProductDetailComponentParam
   ],
   imports: [
     BrowserModule, RouterModule, routing, ChartsModule, HttpModule
