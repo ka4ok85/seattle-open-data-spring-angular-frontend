@@ -1,0 +1,52 @@
+<section id="home" class="home-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2">
+        <div class="section-heading text-center">
+          <div>
+            <h2>Seattle 911 Calls</h2>
+          </div>
+          <p>Reported Seattle 911 Calls for past {{days}} days</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8" style="min-width:700px">
+        <h3 class="text-center">Calls per day</h3>
+        <div id="chart" style="position: relative; height:400px; width:700px">
+          <canvas baseChart id="baseChart" #baseChart width="700" height="400" [datasets]="lineChartData" [labels]="lineChartLabels"
+            [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"
+            (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+          </canvas>
+        </div>
+      </div>
+      <div class="col-md-4" style="margin-bottom: 10px">
+        <button (click)="getData(7)">Last 7 days</button>
+        <button (click)="getData(30)">Last 30 days</button>
+        <button (click)="getData(90)">Last 90 days</button>
+      </div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+      <div class="col-md-8">
+        <h3 class="text-center">Breakdown by type</h3>
+        <div id="pieChartContainer" style="position: relative; height:400px; width:700px">
+          <canvas baseChart id="radarChart" #radarChart width="700" height="400"
+            [datasets]="radarChartData"
+            [labels]="radarChartLabels"
+            [options]="radarChartOptions"
+            [colors]="radarChartColors"
+            [chartType]="radarChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+        </div>
+      </div>
+      <div class="col-md-4" style="margin-bottom: 10px">
+
+      </div>
+    </div>
+  </div>
+</section>
