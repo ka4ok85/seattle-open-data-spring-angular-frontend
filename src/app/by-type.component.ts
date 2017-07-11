@@ -14,13 +14,11 @@ import { BaseChartDirective } from 'ng2-charts/ng2-charts';
     styles: ['']
 })
 
-
 export class ByTypeComponent {
     theDataSource: Observable<string>;
-    //thePieDataSource: Observable<string>;
     apiURL: string;
-    //labels: Array<string> = [];
     days: Number;
+
     public rawData = [];
     public barChartData: Array<any> = [{ data: [] }];
     public barChartLabels: string[] = [];
@@ -45,17 +43,16 @@ export class ByTypeComponent {
     }
 
     public getData(days: Number) {
-
         this.theDataSource = this.http.get(this.apiURL + 'calls/count/per-type/' + days).map(res => res.json());
-        //this.thePieDataSource = this.http.get(this.apiURL + 'calls/count/per-type/' + days).map(res => res.json());
         this.days = days;
+        this.rawData = [];
 
         // Get the data from the REST server
         this.theDataSource.subscribe(
             data => {
                 let dataLabels: string[] = [];
                 let dataCounts: string[] = [];
-                
+
                 for (let i = 0; i < data.length; i++) {
                     this.rawData.push([data[i][0], data[i][1]]);
                 }
@@ -102,18 +99,16 @@ export class ByTypeComponent {
         }
     }
 
-
-
-  public barChartColors: Array<any> = [
-    { // grey
-      backgroundColor: 'rgba(0, 131, 154,0.2)',
-      borderColor: 'rgba(0, 131, 154,1)',
-      pointBackgroundColor: 'rgba(0, 131, 154,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(0, 131, 154,0.8)'
-    }
-  ];
+    public barChartColors: Array<any> = [
+        {
+            backgroundColor: 'rgba(0, 131, 154,0.2)',
+            borderColor: 'rgba(0, 131, 154,1)',
+            pointBackgroundColor: 'rgba(0, 131, 154,1)',
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: 'rgba(0, 131, 154,0.8)'
+        }
+    ];
 
     // events
     public chartClicked(e: any): void {
@@ -123,6 +118,4 @@ export class ByTypeComponent {
     public chartHovered(e: any): void {
         console.log(e);
     }
-
-
 }
