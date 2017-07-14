@@ -15,6 +15,7 @@ import {HomeComponent} from "./home.component";
 import {ByTypeComponent} from "./by-type.component";
 import {ByTypeSpecificComponent} from "./by-type-specific.component";
 import {ByZipComponent} from "./by-zip.component";
+import {ByZipSpecificComponent} from "./by-zip-specific.component";
 import {routing} from "./app.routing";
 import {ProductDetailComponentParam} from "./product-param.component";
 
@@ -24,7 +25,7 @@ import {EnvironmentSpecificResolver} from "./core/services/environment-specific-
 
 @NgModule({
   declarations: [
-    AppComponent, HomeComponent, ByTypeComponent, ByTypeSpecificComponent, ByZipComponent, AboutComponent, ProductDetailComponentParam
+    AppComponent, HomeComponent, ByTypeComponent, ByTypeSpecificComponent, ByZipComponent, ByZipSpecificComponent, AboutComponent, ProductDetailComponentParam
   ],
   imports: [
     BrowserModule, RouterModule, routing, ChartsModule, HttpModule
