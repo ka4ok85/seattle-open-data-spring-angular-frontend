@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 import {PathLocationStrategy} from "@angular/common";
 import { HttpModule } from '@angular/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import 'chart.js/src/chart.js';
@@ -22,13 +23,14 @@ import {ProductDetailComponentParam} from "./product-param.component";
 import {EnvironmentSpecificService} from "./core/services/environment-specific.service";
 import {EnvironmentSpecificResolver} from "./core/services/environment-specific-resolver.service";
 
+import { MyDatePickerModule } from 'mydatepicker';
 
 @NgModule({
   declarations: [
     AppComponent, HomeComponent, ByTypeComponent, ByTypeSpecificComponent, ByZipComponent, ByZipSpecificComponent, AboutComponent, ProductDetailComponentParam
   ],
   imports: [
-    BrowserModule, RouterModule, routing, ChartsModule, HttpModule
+    BrowserModule, RouterModule, routing, ChartsModule, HttpModule, MyDatePickerModule, FormsModule, ReactiveFormsModule
   ],
   providers:[{provide: LocationStrategy, useClass: PathLocationStrategy}, EnvironmentSpecificService, EnvironmentSpecificResolver],
   bootstrap: [AppComponent]
