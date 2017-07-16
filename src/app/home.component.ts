@@ -5,11 +5,13 @@ import { Observable } from "rxjs/Observable";
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EnvSpecific } from 'app/core/models/env-specific';
+import { DateRangeUtils } from "./core/services/date-range-utils.service";
+
 
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { IMyDpOptions, IMyOptions, IMyInputFieldChanged } from 'mydatepicker';
+import { IMyDpOptions, IMyOptions, IMyInputFieldChanged, IMyDate } from 'mydatepicker';
 
 @Component({
   selector: 'home',
@@ -129,7 +131,7 @@ export class HomeComponent {
     ]
   }];
 
-  constructor(private http: Http, private route: ActivatedRoute, formBuilder: FormBuilder) {
+  constructor(private http: Http, private route: ActivatedRoute, formBuilder: FormBuilder, private dateRangeUtils: DateRangeUtils) {
     let date = new Date();
     let year = date.getFullYear();
     let month = date.getMonth();
@@ -156,7 +158,6 @@ export class HomeComponent {
     this.thePieDataSource = this.http.get(this.apiURL + 'calls/count/per-type/' + startDate + '/' + endDate).map(res => res.json());
     //this.days = days;
 
-    // Get the data from the REST server
     this.theDataSource.subscribe(
       data => {
         let dataLabels: String[] = [];
@@ -188,23 +189,12 @@ export class HomeComponent {
     );
   }
 
-
   public getData(days: number) {
-    let date = new Date();
-    let year = date.getFullYear();
-    let month = date.getMonth();
-    let day = date.getDate();
-    let endDateFormatted: string = year + '-' + this.pad(month, 2) + '-' + this.pad(day, 2);
-
-    date.setDate(date.getDate() - days);
-    year = date.getFullYear();
-    month = date.getMonth();
-    day = date.getDate();
-    let startDateFormatted: string = year + '-' + this.pad(month, 2) + '-' + this.pad(day, 2);
-
-    this.getDataInternal(startDateFormatted, endDateFormatted);
+    let range = this.dateRangeUtils.getIntlFormattedRangeForPastDays(days);
+    this.getDataInternal(range['start'], range['end']);
   }
 
+  /* CHARTS */
   private buildLineChart(labels: String[], dataCounts: String[]) {
     this.lineChartData = [{ data: dataCounts, label: '911 Calls #' }];
     let labelsCount = this.lineChartLabels.length;
@@ -257,6 +247,11 @@ export class HomeComponent {
     }
   };
 
+  public lineChartType: string = 'line';
+  public chartClicked(e: any): void {
+  }
+  public chartHovered(e: any): void {
+  }
   public lineChartColors: Array<any> = [
     {
       backgroundColor: 'rgba(0, 131, 154,0.2)',
@@ -268,29 +263,12 @@ export class HomeComponent {
     }
   ];
   public lineChartLegend: boolean = true;
-  public lineChartType: string = 'line';
-
-  // events
-  public chartClicked(e: any): void {
-    //console.log(e);
-  }
-
-  public chartHovered(e: any): void {
-    //console.log(e);
-  }
 
   public pieChartType: string = 'pie';
-
-  // events
   public chartPieClicked(e: any): void {
-    console.log(e);
   }
-
   public chartPieHovered(e: any): void {
-    console.log(e);
   }
-
-
   public pieChartOptions: any = {
     responsive: true,
     legend: {
@@ -299,21 +277,15 @@ export class HomeComponent {
     }
   };
 
+  /* FORMS */
   onDatepickerFormSubmit(): void {
-
     let startDateObject = this.rangeFormModel.controls['startdate'].value.date;
-    let startDateFormatted: string = startDateObject.year + '-' + this.pad(startDateObject.month, 2) + '-' + this.pad(startDateObject.day, 2);
+    let startDateFormatted: string = this.dateRangeUtils.dateToIntlFormattedString(startDateObject);
 
     let endDateObject = this.rangeFormModel.controls['enddate'].value.date;
-    let endDateFormatted: string = endDateObject.year + '-' + this.pad(endDateObject.month, 2) + '-' + this.pad(endDateObject.day, 2);
+    let endDateFormatted: string = this.dateRangeUtils.dateToIntlFormattedString(endDateObject);
 
     this.getDataInternal(startDateFormatted, endDateFormatted);
-  }
-
-  pad(num: number, size: number): string {
-    var s = num + "";
-    while (s.length < size) s = "0" + s;
-    return s;
   }
 
 }

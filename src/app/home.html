@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="col-md-4" style="margin-bottom: 10px">
-        <h3 style="margin: 10px 0px;" >Quick access ranges</h3>
+        <h3 style="margin: 10px 0px;">Quick access ranges</h3>
         <div>
           <button (click)="getData(7)">Last 7 days</button>
           <button (click)="getData(30)">Last 30 days</button>
@@ -32,7 +32,7 @@
         </div>
 
         <h3 style="margin: 10px 0px;">Custom range</h3>
-        <div >
+        <div>
           <form [formGroup]="rangeFormModel" (ngSubmit)="onDatepickerFormSubmit()" novalidate>
             <div class="form-group">
               <label class="col-xs-4 control-label" for="startdate">Start Date:</label>
@@ -49,7 +49,7 @@
               </div>
             </div>
             <div class="form-group">
-              <div class="col-xs-12 text-center" >
+              <div class="col-xs-12 text-center">
                 <button type="submit" class="btn btn-default">Query</button>
               </div>
             </div>
