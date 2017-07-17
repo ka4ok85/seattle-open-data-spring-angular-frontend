@@ -7,7 +7,6 @@ import { ActivatedRoute } from '@angular/router';
 import { EnvSpecific } from 'app/core/models/env-specific';
 import { DateRangeUtils } from "./core/services/date-range-utils.service";
 
-
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -33,6 +32,7 @@ export class HomeComponent {
   };
 
   public rangeFormModel: FormGroup;
+  public rangeForm: FormGroup;
 
   public lineChartData: Array<any> = [{ data: [] }];
   public lineChartLabels: Array<any> = [];
@@ -137,9 +137,20 @@ export class HomeComponent {
     let month = date.getMonth();
     let day = date.getDate();
 
+    // sub-form
+    this.rangeForm = formBuilder.group(
+      {
+        startdate: [{ date: { year: year, month: month, day: day } }, Validators.required],
+        enddate: [{ date: { year: year, month: month + 1, day: day } }, Validators.required]
+      },
+      {
+        validator: this.startEndDatesRange.bind(this)
+      }
+    );
+
+    // main form
     this.rangeFormModel = formBuilder.group({
-      startdate: [{ date: { year: year, month: month, day: day } }, Validators.required], // month mismatch
-      enddate: [{ date: { year: year, month: month + 1, day: day } }, Validators.required]
+      'rangeForm': this.rangeForm
     });
   }
 
@@ -279,13 +290,29 @@ export class HomeComponent {
 
   /* FORMS */
   onDatepickerFormSubmit(): void {
-    let startDateObject = this.rangeFormModel.controls['startdate'].value.date;
+    let startDateObject = this.rangeForm.controls['startdate'].value.date;
     let startDateFormatted: string = this.dateRangeUtils.dateToIntlFormattedString(startDateObject);
 
-    let endDateObject = this.rangeFormModel.controls['enddate'].value.date;
+    let endDateObject = this.rangeForm.controls['enddate'].value.date;
     let endDateFormatted: string = this.dateRangeUtils.dateToIntlFormattedString(endDateObject);
 
     this.getDataInternal(startDateFormatted, endDateFormatted);
+  }
+
+  private startEndDatesRange(group: FormGroup) {
+    if (!group.controls.startdate || !group.controls.startdate.value || !group.controls.enddate || !group.controls.enddate.value) return;
+
+    let startDate = group.controls.startdate.value.date;
+    let endDate = group.controls.enddate.value.date;
+
+    let startDateNumber: number = startDate.year * 10000 + startDate.month * 100 + startDate.day;
+    let endDateNumber: number = endDate.year * 10000 + endDate.month * 100 + endDate.day;
+
+    if (startDateNumber > endDateNumber) {
+      return {
+        badRange: true
+      };
+    }
   }
 
 }
