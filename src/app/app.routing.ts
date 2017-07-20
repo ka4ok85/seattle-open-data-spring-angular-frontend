@@ -5,7 +5,6 @@ import {ByTypeSpecificComponent} from "./by-type-specific.component";
 import {ByZipComponent} from "./by-zip.component";
 import {ByZipSpecificComponent} from "./by-zip-specific.component";
 import {AboutComponent} from "./about.component";
-import {ProductDetailComponentParam} from "./product-param.component";
 import {EnvironmentSpecificResolver} from './core/services/environment-specific-resolver.service';
 
 const routes: Routes = [

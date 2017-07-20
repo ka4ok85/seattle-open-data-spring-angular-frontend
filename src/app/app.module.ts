@@ -12,13 +12,15 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import 'chart.js/src/chart.js';
 
 import { AboutComponent } from "./about.component";
+import { DateRangeFormComponent } from "./date-range-form-component.component";
+
+
 import { HomeComponent } from "./home.component";
 import { ByTypeComponent } from "./by-type.component";
 import { ByTypeSpecificComponent } from "./by-type-specific.component";
 import { ByZipComponent } from "./by-zip.component";
 import { ByZipSpecificComponent } from "./by-zip-specific.component";
 import { routing } from "./app.routing";
-import { ProductDetailComponentParam } from "./product-param.component";
 
 import { EnvironmentSpecificService } from "./core/services/environment-specific.service";
 import { EnvironmentSpecificResolver } from "./core/services/environment-specific-resolver.service";
@@ -28,7 +30,7 @@ import { MyDatePickerModule } from 'mydatepicker';
 
 @NgModule({
   declarations: [
-    AppComponent, HomeComponent, ByTypeComponent, ByTypeSpecificComponent, ByZipComponent, ByZipSpecificComponent, AboutComponent, ProductDetailComponentParam
+    AppComponent, HomeComponent, ByTypeComponent, ByTypeSpecificComponent, ByZipComponent, ByZipSpecificComponent, AboutComponent, DateRangeFormComponent
   ],
   imports: [
     BrowserModule, RouterModule, routing, ChartsModule, HttpModule, MyDatePickerModule, FormsModule, ReactiveFormsModule
