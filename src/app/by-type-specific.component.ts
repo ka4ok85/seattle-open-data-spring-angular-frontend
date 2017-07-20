@@ -5,8 +5,8 @@ import { Observable } from "rxjs/Observable";
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EnvSpecific } from 'app/core/models/env-specific';
-
-import { BaseChartDirective } from 'ng2-charts/ng2-charts';
+import { FormDateRange } from "./core/models/form-date-range";
+import { DateRangeUtils } from "./core/services/date-range-utils.service";
 
 @Component({
     selector: 'by-type',
@@ -14,9 +14,7 @@ import { BaseChartDirective } from 'ng2-charts/ng2-charts';
     styles: ['']
 })
 
-
 export class ByTypeSpecificComponent {
-
     type: string;
     theDataSource: Observable<string>;
     theRadarDataSource: Observable<string>;
@@ -27,27 +25,9 @@ export class ByTypeSpecificComponent {
     public lineChartLabels: Array<any> = [];
     public radarChartLabels: String[] = [];
     public radarChartData: Array<any> = [{ data: [] }];
-    public radarChartColors: {}[] = [{
-        backgroundColor: [
-            '#5d8aa8',
-            '#e32636',
-            '#efdecd',
-            '#e52b50',
-            '#ffbf00',
-            '#ff033e',
-            '#9966cc',
-            '#a4c639',
-            '#f2f3f4',
-            '#cd9575',
-            '#915c83',
-            '#faebd7',
-            '#008000'
-        ]
-    }]
 
-    constructor(private http: Http, private route: ActivatedRoute) {
+    constructor(private http: Http, private route: ActivatedRoute, private dateRangeUtils: DateRangeUtils) {
         this.type = route.snapshot.paramMap.get('type');
-        console.log(this.type);
     }
 
     ngOnInit() {
@@ -56,15 +36,13 @@ export class ByTypeSpecificComponent {
                 this.apiURL = data.envSpecific.apiURL;
             });
 
-        this.getData(90);
+        this.getData(30);
     }
 
-    public getData(days: Number) {
-
-        console.log(this.apiURL);
-        this.theDataSource = this.http.get(this.apiURL + 'calls/count/' + days + "?type=" + this.type).map(res => res.json());
-        this.theRadarDataSource = this.http.get(this.apiURL + 'calls/count/per-zip/' + days + "?type=" + this.type).map(res => res.json());
-        this.days = days;
+    private getDataInternal(startDate: string, endDate: string) {
+        this.theDataSource = this.http.get(this.apiURL + 'calls/count/' + startDate + '/' + endDate + "?type=" + this.type).map(res => res.json());
+        this.theRadarDataSource = this.http.get(this.apiURL + 'calls/count/per-zip/' + startDate + '/' + endDate + "?type=" + this.type).map(res => res.json());
+        //this.days = days;
 
         // Get the data from the REST server
         this.theDataSource.subscribe(
@@ -96,7 +74,11 @@ export class ByTypeSpecificComponent {
             err => console.log("Can't get Radar Chart Counts. Error code: %s, URL: %s ", err.status, err.url),
             () => console.log('Radar Chart Counts are retrieved')
         );
+    }
 
+    public getData(days: number) {
+        let range = this.dateRangeUtils.getIntlFormattedRangeForPastDays(days);
+        this.getDataInternal(range['start'], range['end']);
     }
 
     private buildLineChart(labels: String[], dataCounts: String[]) {
@@ -111,6 +93,7 @@ export class ByTypeSpecificComponent {
         }
     }
 
+    /* CHARTS */
     private buildRadarChart(labels: String[], dataCounts: String[]) {
         this.radarChartData = [{ data: dataCounts, label: this.type + ' 911 Calls #' }];
         let labelsCount = this.radarChartLabels.length;
@@ -143,7 +126,7 @@ export class ByTypeSpecificComponent {
     };
 
     public lineChartColors: Array<any> = [
-        { // grey
+        {
             backgroundColor: 'rgba(0, 131, 154,0.2)',
             borderColor: 'rgba(0, 131, 154,1)',
             pointBackgroundColor: 'rgba(0, 131, 154,1)',
@@ -154,28 +137,16 @@ export class ByTypeSpecificComponent {
     ];
     public lineChartLegend: boolean = true;
     public lineChartType: string = 'line';
-
-    // events
     public chartClicked(e: any): void {
-        //console.log(e);
     }
-
     public chartHovered(e: any): void {
-        //console.log(e);
     }
 
     public radarChartType: string = 'radar';
-
-    // events
     public chartRadarClicked(e: any): void {
-        console.log(e);
     }
-
     public chartRadarHovered(e: any): void {
-        console.log(e);
     }
-
-
     public radarChartOptions: any = {
         responsive: true,
         legend: {
@@ -183,4 +154,26 @@ export class ByTypeSpecificComponent {
             position: "right"
         }
     };
+    public radarChartColors: {}[] = [{
+        backgroundColor: [
+            '#5d8aa8',
+            '#e32636',
+            '#efdecd',
+            '#e52b50',
+            '#ffbf00',
+            '#ff033e',
+            '#9966cc',
+            '#a4c639',
+            '#f2f3f4',
+            '#cd9575',
+            '#915c83',
+            '#faebd7',
+            '#008000'
+        ]
+    }]
+
+    /* FORMS */
+    public onDateRangeFormSubmit(formDateRange: FormDateRange): void {
+        this.getDataInternal(formDateRange.startDate, formDateRange.endDate);
+    }
 }
