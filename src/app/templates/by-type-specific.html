@@ -24,9 +24,13 @@
         </div>
       </div>
       <div class="col-md-4" style="margin-bottom: 10px">
-        <button (click)="getData(7)">Last 7 days</button>
-        <button (click)="getData(30)">Last 30 days</button>
-        <button (click)="getData(90)">Last 90 days</button>
+        <h3 style="margin: 10px 0px;">Quick access ranges</h3>
+        <div>
+          <button (click)="getData(7)">Last 7 days</button>
+          <button (click)="getData(30)">Last 30 days</button>
+          <button (click)="getData(90)">Last 90 days</button>
+        </div>
+        <dateRangeForm (onDateRangeFormSubmit)="onDateRangeFormSubmit($event)"> </dateRangeForm>
       </div>
     </div>
     <div class="row">&nbsp;</div>
@@ -34,13 +38,8 @@
       <div class="col-md-8">
         <h3 class="text-center">Breakdown by type</h3>
         <div id="pieChartContainer" style="position: relative; height:400px; width:700px">
-          <canvas baseChart id="radarChart" #radarChart width="700" height="400"
-            [datasets]="radarChartData"
-            [labels]="radarChartLabels"
-            [options]="radarChartOptions"
-            [colors]="radarChartColors"
-            [chartType]="radarChartType"
-            (chartHover)="chartHovered($event)"
+          <canvas baseChart id="radarChart" #radarChart width="700" height="400" [datasets]="radarChartData" [labels]="radarChartLabels"
+            [options]="radarChartOptions" [colors]="radarChartColors" [chartType]="radarChartType" (chartHover)="chartHovered($event)"
             (chartClick)="chartClicked($event)"></canvas>
         </div>
       </div>
