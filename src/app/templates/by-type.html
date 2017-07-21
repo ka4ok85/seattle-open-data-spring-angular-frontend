@@ -23,17 +23,22 @@
                 </div>
             </div>
             <div class="col-md-4" style="margin-bottom: 10px">
-                <button (click)="getData(7)">Last 7 days</button>
-                <button (click)="getData(30)">Last 30 days</button>
-                <button (click)="getData(90)">Last 90 days</button>
+                <h3 style="margin: 10px 0px;">Quick access ranges</h3>
+                <div>
+                    <button (click)="getData(7)">Last 7 days</button>
+                    <button (click)="getData(30)">Last 30 days</button>
+                    <button (click)="getData(90)">Last 90 days</button>
+                </div>
+                <dateRangeForm (onDateRangeFormSubmit)="onDateRangeFormSubmit($event)"> </dateRangeForm>
             </div>
         </div>
+
         <div class="row">&nbsp;</div>
         <div class="row">
             <div class="col-md-8">
                 <h3 class="text-center">Breakdown by type</h3>
                 <div class="columns">
-                    <ul >
+                    <ul>
                         <li *ngFor="let record of rawData"><a href="" [routerLink]="['/by-type', record[1]]">{{record[1]}} ({{record[0]}})</a></li>
                     </ul>
                 </div>
