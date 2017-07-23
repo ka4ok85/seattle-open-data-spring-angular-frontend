@@ -5,11 +5,11 @@ import { Observable } from "rxjs/Observable";
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EnvSpecific } from 'app/core/models/env-specific';
-
-import { BaseChartDirective } from 'ng2-charts/ng2-charts';
+import { FormDateRange } from "./core/models/form-date-range";
+import { DateRangeUtils } from "./core/services/date-range-utils.service";
 
 @Component({
-    selector: 'by-zip',
+    selector: '',
     templateUrl: './templates/by-zip.html',
     styles: ['']
 })
@@ -22,14 +22,8 @@ export class ByZipComponent {
     public rawData = [];
     public barChartData: Array<any> = [{ data: [] }];
     public barChartLabels: string[] = [];
-    public barChartType: string = 'bar';
-    public barChartLegend: boolean = true;
-    public barChartOptions: any = {
-        scaleShowVerticalLines: false,
-        responsive: true
-    };
 
-    constructor(private http: Http, private route: ActivatedRoute) {
+    constructor(private http: Http, private route: ActivatedRoute, private dateRangeUtils: DateRangeUtils) {
 
     }
 
@@ -39,12 +33,12 @@ export class ByZipComponent {
                 this.apiURL = data.envSpecific.apiURL;
             });
 
-        this.getData(90);
+        this.getData(30);
     }
 
-    public getData(days: Number) {
-        this.theDataSource = this.http.get(this.apiURL + 'calls/count/per-zip/' + days).map(res => res.json());
-        this.days = days;
+    private getDataInternal(startDate: string, endDate: string) {
+        this.theDataSource = this.http.get(this.apiURL + 'calls/count/per-zip/' + startDate + '/' + endDate).map(res => res.json());
+        //this.days = days;
         this.rawData = [];
 
         // Get the data from the REST server
@@ -87,6 +81,12 @@ export class ByZipComponent {
 
     }
 
+    public getData(days: number) {
+        let range = this.dateRangeUtils.getIntlFormattedRangeForPastDays(days);
+        this.getDataInternal(range['start'], range['end']);
+    }
+
+    /* CHARTS */
     private buildBarChart(labels: string[], dataCounts: string[]) {
         this.barChartData = [{ data: dataCounts, label: 'Top 5 Call Zip Codes' }];
         let labelsCount = this.barChartLabels.length;
@@ -109,14 +109,26 @@ export class ByZipComponent {
             pointHoverBorderColor: 'rgba(0, 131, 154,0.8)'
         }
     ];
-
-    // events
+    public barChartType: string = 'bar';
+    public barChartLegend: boolean = true;
+    public barChartOptions: any = {
+        scaleShowVerticalLines: false,
+        responsive: true,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    };
     public chartClicked(e: any): void {
-        console.log(e);
+    }
+    public chartHovered(e: any): void {
     }
 
-    public chartHovered(e: any): void {
-        console.log(e);
+    /* FORMS */
+    public onDateRangeFormSubmit(formDateRange: FormDateRange): void {
+        this.getDataInternal(formDateRange.startDate, formDateRange.endDate);
     }
-    
 }
