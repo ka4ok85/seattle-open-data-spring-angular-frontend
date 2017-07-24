@@ -7,13 +7,14 @@ import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 import { PathLocationStrategy } from "@angular/common";
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import 'chart.js/src/chart.js';
+import {BusyModule} from 'angular2-busy';
 
 import { AboutComponent } from "./about.component";
 import { DateRangeFormComponent } from "./date-range-form-component.component";
-
 
 import { HomeComponent } from "./home.component";
 import { ByTypeComponent } from "./by-type.component";
@@ -33,7 +34,7 @@ import { MyDatePickerModule } from 'mydatepicker';
     AppComponent, HomeComponent, ByTypeComponent, ByTypeSpecificComponent, ByZipComponent, ByZipSpecificComponent, AboutComponent, DateRangeFormComponent
   ],
   imports: [
-    BrowserModule, RouterModule, routing, ChartsModule, HttpModule, MyDatePickerModule, FormsModule, ReactiveFormsModule
+    BrowserModule, RouterModule, routing, ChartsModule, HttpModule, MyDatePickerModule, FormsModule, ReactiveFormsModule, BusyModule, BrowserAnimationsModule
   ],
   providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }, EnvironmentSpecificService, EnvironmentSpecificResolver, DateRangeUtils],
   bootstrap: [AppComponent]
