@@ -15,6 +15,7 @@ import {BusyModule} from 'angular2-busy';
 
 import { AboutComponent } from "./about.component";
 import { DateRangeFormComponent } from "./date-range-form-component.component";
+import { DateRangeQuickButtonsComponent } from "./date-range-quick-buttons";
 
 import { HomeComponent } from "./home.component";
 import { ByTypeComponent } from "./by-type.component";
@@ -31,7 +32,7 @@ import { MyDatePickerModule } from 'mydatepicker';
 
 @NgModule({
   declarations: [
-    AppComponent, HomeComponent, ByTypeComponent, ByTypeSpecificComponent, ByZipComponent, ByZipSpecificComponent, AboutComponent, DateRangeFormComponent
+    AppComponent, HomeComponent, ByTypeComponent, ByTypeSpecificComponent, ByZipComponent, ByZipSpecificComponent, AboutComponent, DateRangeFormComponent, DateRangeQuickButtonsComponent
   ],
   imports: [
     BrowserModule, RouterModule, routing, ChartsModule, HttpModule, MyDatePickerModule, FormsModule, ReactiveFormsModule, BusyModule, BrowserAnimationsModule
