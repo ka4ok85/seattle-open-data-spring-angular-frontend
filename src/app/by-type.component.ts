@@ -19,6 +19,8 @@ export class ByTypeComponent {
     apiURL: string;
     days: Number;
 
+    busy: Promise<any>;
+
     public rawData = [];
     public barChartData: Array<any> = [{ data: [] }];
     public barChartLabels: string[] = [];
@@ -38,6 +40,7 @@ export class ByTypeComponent {
 
     private getDataInternal(startDate: string, endDate: string) {
         this.theDataSource = this.http.get(this.apiURL + 'calls/count/per-type/' + startDate + '/' + endDate).map(res => res.json());
+        this.busy = this.theDataSource.toPromise();
         //this.days = days;
         this.rawData = [];
 
