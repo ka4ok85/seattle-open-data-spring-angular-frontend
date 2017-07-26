@@ -18,7 +18,6 @@ export class ByTypeComponent {
     theDataSource: Observable<string>;
     apiURL: string;
     days: Number;
-
     busy: Promise<any>;
 
     public rawData = [];
@@ -36,6 +35,11 @@ export class ByTypeComponent {
             });
 
         this.getData(30);
+    }
+
+    public getData(days: number) {
+        let range = this.dateRangeUtils.getIntlFormattedRangeForPastDays(days);
+        this.getDataInternal(range['start'], range['end']);
     }
 
     private getDataInternal(startDate: string, endDate: string) {
@@ -84,11 +88,6 @@ export class ByTypeComponent {
 
     }
 
-    public getData(days: number) {
-        let range = this.dateRangeUtils.getIntlFormattedRangeForPastDays(days);
-        this.getDataInternal(range['start'], range['end']);
-    }
-
     /* CHARTS */
     private buildBarChart(labels: string[], dataCounts: string[]) {
         this.barChartData = [{ data: dataCounts, label: 'Top 5 Call Types' }];
@@ -135,4 +134,8 @@ export class ByTypeComponent {
         this.getDataInternal(formDateRange.startDate, formDateRange.endDate);
     }
 
+    public onDateRangeQuickButtonClick(days: number): void {
+        let range = this.dateRangeUtils.getIntlFormattedRangeForPastDays(days);
+        this.getDataInternal(range['start'], range['end']);
+    }
 }
