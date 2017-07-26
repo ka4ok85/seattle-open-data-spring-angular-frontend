@@ -36,6 +36,11 @@ export class ByZipComponent {
         this.getData(30);
     }
 
+    public getData(days: number) {
+        let range = this.dateRangeUtils.getIntlFormattedRangeForPastDays(days);
+        this.getDataInternal(range['start'], range['end']);
+    }
+
     private getDataInternal(startDate: string, endDate: string) {
         this.theDataSource = this.http.get(this.apiURL + 'calls/count/per-zip/' + startDate + '/' + endDate).map(res => res.json());
         //this.days = days;
@@ -79,11 +84,6 @@ export class ByZipComponent {
             () => console.log('Counts are retrieved')
         );
 
-    }
-
-    public getData(days: number) {
-        let range = this.dateRangeUtils.getIntlFormattedRangeForPastDays(days);
-        this.getDataInternal(range['start'], range['end']);
     }
 
     /* CHARTS */
@@ -130,5 +130,10 @@ export class ByZipComponent {
     /* FORMS */
     public onDateRangeFormSubmit(formDateRange: FormDateRange): void {
         this.getDataInternal(formDateRange.startDate, formDateRange.endDate);
+    }
+
+    public onDateRangeQuickButtonClick(days: number): void {
+        let range = this.dateRangeUtils.getIntlFormattedRangeForPastDays(days);
+        this.getDataInternal(range['start'], range['end']);
     }
 }
