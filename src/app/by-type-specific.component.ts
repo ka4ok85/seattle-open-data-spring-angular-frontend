@@ -39,6 +39,11 @@ export class ByTypeSpecificComponent {
         this.getData(30);
     }
 
+    public getData(days: number) {
+        let range = this.dateRangeUtils.getIntlFormattedRangeForPastDays(days);
+        this.getDataInternal(range['start'], range['end']);
+    }
+
     private getDataInternal(startDate: string, endDate: string) {
         this.theDataSource = this.http.get(this.apiURL + 'calls/count/' + startDate + '/' + endDate + "?type=" + this.type).map(res => res.json());
         this.theRadarDataSource = this.http.get(this.apiURL + 'calls/count/per-zip/' + startDate + '/' + endDate + "?type=" + this.type).map(res => res.json());
@@ -74,11 +79,6 @@ export class ByTypeSpecificComponent {
             err => console.log("Can't get Radar Chart Counts. Error code: %s, URL: %s ", err.status, err.url),
             () => console.log('Radar Chart Counts are retrieved')
         );
-    }
-
-    public getData(days: number) {
-        let range = this.dateRangeUtils.getIntlFormattedRangeForPastDays(days);
-        this.getDataInternal(range['start'], range['end']);
     }
 
     private buildLineChart(labels: String[], dataCounts: String[]) {
@@ -175,5 +175,10 @@ export class ByTypeSpecificComponent {
     /* FORMS */
     public onDateRangeFormSubmit(formDateRange: FormDateRange): void {
         this.getDataInternal(formDateRange.startDate, formDateRange.endDate);
+    }
+
+    public onDateRangeQuickButtonClick(days: number): void {
+        let range = this.dateRangeUtils.getIntlFormattedRangeForPastDays(days);
+        this.getDataInternal(range['start'], range['end']);
     }
 }
