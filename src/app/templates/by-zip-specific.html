@@ -24,12 +24,7 @@
                 </div>
             </div>
             <div class="col-md-4" style="margin-bottom: 10px">
-                <h3 style="margin: 10px 0px;">Quick access ranges</h3>
-                <div>
-                    <button (click)="getData(7)">Last 7 days</button>
-                    <button (click)="getData(30)">Last 30 days</button>
-                    <button (click)="getData(90)">Last 90 days</button>
-                </div>
+                <dateRangeQuickButtons (onDateRangeQuickButtonClick)="onDateRangeQuickButtonClick($event)"></dateRangeQuickButtons>
                 <dateRangeForm (onDateRangeFormSubmit)="onDateRangeFormSubmit($event)"> </dateRangeForm>
             </div>
 
