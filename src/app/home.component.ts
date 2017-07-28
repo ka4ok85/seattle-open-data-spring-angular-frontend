@@ -8,7 +8,6 @@ import { EnvSpecific } from 'app/core/models/env-specific';
 import { FormDateRange } from "./core/models/form-date-range";
 import { DateRangeUtils } from "./core/services/date-range-utils.service";
 
-//import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { IMyDpOptions, IMyOptions, IMyInputFieldChanged, IMyDate } from 'mydatepicker';
 
 @Component({
@@ -28,37 +27,12 @@ export class HomeComponent {
     editableDateField: false,
   };
 
-//  public rangeFormModel: FormGroup;
-//  public rangeForm: FormGroup;
-
   public lineChartData: Array<any> = [{ data: [] }];
   public lineChartLabels: Array<any> = [];
   public pieChartLabels: String[] = [];
   public pieChartData: String[] = [];
 
   constructor(private http: Http, private route: ActivatedRoute, private dateRangeUtils: DateRangeUtils) {
-/*
-    let date = new Date();
-    let year = date.getFullYear();
-    let month = date.getMonth();
-    let day = date.getDate();
-
-    // sub-form
-    this.rangeForm = formBuilder.group(
-      {
-        startdate: [{ date: { year: year, month: month, day: day } }, Validators.required],
-        enddate: [{ date: { year: year, month: month + 1, day: day } }, Validators.required]
-      },
-      {
-        validator: this.startEndDatesRange.bind(this)
-      }
-    );
-
-    // main form
-    this.rangeFormModel = formBuilder.group({
-      'rangeForm': this.rangeForm
-    });
-*/
   }
 
   ngOnInit() {
@@ -68,6 +42,11 @@ export class HomeComponent {
       });
 
     this.getData(30);
+  }
+
+  public getData(days: number) {
+    let range = this.dateRangeUtils.getIntlFormattedRangeForPastDays(days);
+    this.getDataInternal(range['start'], range['end']);
   }
 
   private getDataInternal(startDate: string, endDate: string) {
@@ -107,11 +86,6 @@ export class HomeComponent {
     );
   }
 
-  public getData(days: number) {
-    let range = this.dateRangeUtils.getIntlFormattedRangeForPastDays(days);
-    this.getDataInternal(range['start'], range['end']);
-  }
-
   /* CHARTS */
   private buildLineChart(labels: String[], dataCounts: String[]) {
     this.lineChartData = [{ data: dataCounts, label: '911 Calls #' }];
@@ -140,7 +114,6 @@ export class HomeComponent {
 
     for (let label of labels) {
       this.pieChartLabels.push(label);
-      //colorObject.backgroundColor.push('red');
     }
 
     //this.pieChartColors.push(colorObject); // controlled dynamic color set is not needed for now
@@ -288,35 +261,12 @@ export class HomeComponent {
   }];
 
   /* FORMS */
-    public onDateRangeFormSubmit(formDateRange: FormDateRange): void {
-        this.getDataInternal(formDateRange.startDate, formDateRange.endDate);
-    }
-
-/*
-    onDatepickerFormSubmit(): void {
-    let startDateObject = this.rangeForm.controls['startdate'].value.date;
-    let startDateFormatted: string = this.dateRangeUtils.dateToIntlFormattedString(startDateObject);
-
-    let endDateObject = this.rangeForm.controls['enddate'].value.date;
-    let endDateFormatted: string = this.dateRangeUtils.dateToIntlFormattedString(endDateObject);
-
-    this.getDataInternal(startDateFormatted, endDateFormatted);
+  public onDateRangeFormSubmit(formDateRange: FormDateRange): void {
+    this.getDataInternal(formDateRange.startDate, formDateRange.endDate);
   }
 
-  private startEndDatesRange(group: FormGroup) {
-    if (!group.controls.startdate || !group.controls.startdate.value || !group.controls.enddate || !group.controls.enddate.value) return;
-
-    let startDate = group.controls.startdate.value.date;
-    let endDate = group.controls.enddate.value.date;
-
-    let startDateNumber: number = startDate.year * 10000 + startDate.month * 100 + startDate.day;
-    let endDateNumber: number = endDate.year * 10000 + endDate.month * 100 + endDate.day;
-
-    if (startDateNumber > endDateNumber) {
-      return {
-        badRange: true
-      };
-    }
+  public onDateRangeQuickButtonClick(days: number): void {
+    let range = this.dateRangeUtils.getIntlFormattedRangeForPastDays(days);
+    this.getDataInternal(range['start'], range['end']);
   }
-*/
 }
