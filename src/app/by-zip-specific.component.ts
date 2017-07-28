@@ -42,6 +42,11 @@ export class ByZipSpecificComponent {
         this.getData(30);
     }
 
+    public getData(days: number) {
+        let range = this.dateRangeUtils.getIntlFormattedRangeForPastDays(days);
+        this.getDataInternal(range['start'], range['end']);
+    }
+
     private getDataInternal(startDate: string, endDate: string) {
         this.theDataSource = this.http.get(this.apiURL + 'calls/count/' + startDate + '/' + endDate + "?zip=" + this.zip).map(res => res.json());
         this.thePieDataSource = this.http.get(this.apiURL + 'calls/count/per-type/' + startDate + '/' + endDate + "?zip=" + this.zip).map(res => res.json());
@@ -80,12 +85,7 @@ export class ByZipSpecificComponent {
 
     }
 
-    public getData(days: number) {
-        let range = this.dateRangeUtils.getIntlFormattedRangeForPastDays(days);
-        this.getDataInternal(range['start'], range['end']);
-    }
-
-        /* CHARTS */
+    /* CHARTS */
     private buildLineChart(labels: String[], dataCounts: String[]) {
         this.lineChartData = [{ data: dataCounts, label: this.zip + ' 911 Calls #' }];
         let labelsCount = this.lineChartLabels.length;
@@ -148,94 +148,94 @@ export class ByZipSpecificComponent {
     public pieChartType: string = 'pie';
     public pieChartColors: {}[] = [{
         backgroundColor: [
-      '#5d8aa8',
-      '#e32636',
-      '#efdecd',
-      '#e52b50',
-      '#ffbf00',
-      '#ff033e',
-      '#9966cc',
-      '#a4c639',
-      '#f2f3f4',
-      '#cd9575',
-      '#915c83',
-      '#faebd7',
-      '#008000',
-      '#8db600',
-      '#fbceb1',
-      '#00ffff',
-      '#7fffd4',
-      '#4b5320',
-      '#e9d66b',
-      '#b2beb5',
-      '#87a96b',
-      '#ff9966',
-      '#a52a2a',
-      '#fdee00',
-      '#6e7f80',
-      '#ff2052',
-      '#007fff',
-      '#f0ffff',
-      '#89cff0',
-      '#a1caf1',
-      '#f4c2c2',
-      '#21abcd',
-      '#fae7b5',
-      '#ffe135',
-      '#848482',
-      '#98777b',
-      '#bcd4e6',
-      '#9f8170',
-      '#f5f5dc',
-      '#ffe4c4',
-      '#3d2b1f',
-      '#fe6f5e',
-      '#000000',
-      '#ffebcd',
-      '#318ce7',
-      '#ace5ee',
-      '#faf0be',
-      '#0000ff',
-      '#a2a2d0',
-      '#6699cc',
-      '#0d98ba',
-      '#8a2be2',
-      '#de5d83',
-      '#79443b',
-      '#0095b6',
-      '#e3dac9',
-      '#cc0000',
-      '#006a4e',
-      '#873260',
-      '#0070ff',
-      '#b5a642',
-      '#cb4154',
-      '#1dacd6',
-      '#66ff00',
-      '#bf94e4',
-      '#c32148',
-      '#ff007f',
-      '#08e8de',
-      '#d19fe8',
-      '#f4bbff',
-      '#ff55a3',
-      '#fb607f',
-      '#004225',
-      '#cd7f32',
-      '#a52a2a',
-      '#ffc1cc',
-      '#e7feff',
-      '#f0dc82',
-      '#480607',
-      '#800020',
-      '#deb887',
-      '#cc5500',
-      '#e97451',
-      '#8a3324',
-      '#bd33a4',
-      '#702963',
-      '#007aa5',
-      '#e03c31'
+            '#5d8aa8',
+            '#e32636',
+            '#efdecd',
+            '#e52b50',
+            '#ffbf00',
+            '#ff033e',
+            '#9966cc',
+            '#a4c639',
+            '#f2f3f4',
+            '#cd9575',
+            '#915c83',
+            '#faebd7',
+            '#008000',
+            '#8db600',
+            '#fbceb1',
+            '#00ffff',
+            '#7fffd4',
+            '#4b5320',
+            '#e9d66b',
+            '#b2beb5',
+            '#87a96b',
+            '#ff9966',
+            '#a52a2a',
+            '#fdee00',
+            '#6e7f80',
+            '#ff2052',
+            '#007fff',
+            '#f0ffff',
+            '#89cff0',
+            '#a1caf1',
+            '#f4c2c2',
+            '#21abcd',
+            '#fae7b5',
+            '#ffe135',
+            '#848482',
+            '#98777b',
+            '#bcd4e6',
+            '#9f8170',
+            '#f5f5dc',
+            '#ffe4c4',
+            '#3d2b1f',
+            '#fe6f5e',
+            '#000000',
+            '#ffebcd',
+            '#318ce7',
+            '#ace5ee',
+            '#faf0be',
+            '#0000ff',
+            '#a2a2d0',
+            '#6699cc',
+            '#0d98ba',
+            '#8a2be2',
+            '#de5d83',
+            '#79443b',
+            '#0095b6',
+            '#e3dac9',
+            '#cc0000',
+            '#006a4e',
+            '#873260',
+            '#0070ff',
+            '#b5a642',
+            '#cb4154',
+            '#1dacd6',
+            '#66ff00',
+            '#bf94e4',
+            '#c32148',
+            '#ff007f',
+            '#08e8de',
+            '#d19fe8',
+            '#f4bbff',
+            '#ff55a3',
+            '#fb607f',
+            '#004225',
+            '#cd7f32',
+            '#a52a2a',
+            '#ffc1cc',
+            '#e7feff',
+            '#f0dc82',
+            '#480607',
+            '#800020',
+            '#deb887',
+            '#cc5500',
+            '#e97451',
+            '#8a3324',
+            '#bd33a4',
+            '#702963',
+            '#007aa5',
+            '#e03c31'
         ]
     }]
 
@@ -254,5 +254,10 @@ export class ByZipSpecificComponent {
     /* FORMS */
     public onDateRangeFormSubmit(formDateRange: FormDateRange): void {
         this.getDataInternal(formDateRange.startDate, formDateRange.endDate);
+    }
+
+    public onDateRangeQuickButtonClick(days: number): void {
+        let range = this.dateRangeUtils.getIntlFormattedRangeForPastDays(days);
+        this.getDataInternal(range['start'], range['end']);
     }
 }
