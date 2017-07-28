@@ -26,7 +26,7 @@ export class DateRangeFormComponent {
 
   public myDatePickerOptions: IMyDpOptions = {
     dateFormat: 'mm/dd/yyyy',
-    width: '150px',
+    width: '130px',
     editableDateField: false,
   };
 
