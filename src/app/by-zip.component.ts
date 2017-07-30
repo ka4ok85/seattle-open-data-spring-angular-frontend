@@ -18,6 +18,7 @@ export class ByZipComponent {
     theDataSource: Observable<string>;
     apiURL: string;
     days: Number;
+    busy: Promise<any>;
 
     public rawData = [];
     public barChartData: Array<any> = [{ data: [] }];
@@ -43,6 +44,7 @@ export class ByZipComponent {
 
     private getDataInternal(startDate: string, endDate: string) {
         this.theDataSource = this.http.get(this.apiURL + 'calls/count/per-zip/' + startDate + '/' + endDate).map(res => res.json());
+        this.busy = this.theDataSource.toPromise();
         //this.days = days;
         this.rawData = [];
 
