@@ -22,6 +22,7 @@ export class ByZipSpecificComponent {
     thePieDataSource: Observable<string>;
     apiURL: string;
     days: Number;
+    busy: Promise<any>;
 
     public lineChartData: Array<any> = [{ data: [] }];
     public lineChartLabels: Array<any> = [];
@@ -50,6 +51,7 @@ export class ByZipSpecificComponent {
     private getDataInternal(startDate: string, endDate: string) {
         this.theDataSource = this.http.get(this.apiURL + 'calls/count/' + startDate + '/' + endDate + "?zip=" + this.zip).map(res => res.json());
         this.thePieDataSource = this.http.get(this.apiURL + 'calls/count/per-type/' + startDate + '/' + endDate + "?zip=" + this.zip).map(res => res.json());
+        this.busy = this.theDataSource.toPromise();
         //this.days = days;
 
         // Get the data from the REST server
