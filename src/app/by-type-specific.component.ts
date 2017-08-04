@@ -20,6 +20,7 @@ export class ByTypeSpecificComponent {
     theRadarDataSource: Observable<string>;
     apiURL: string;
     days: Number;
+    busy: Promise<any>;
 
     public lineChartData: Array<any> = [{ data: [] }];
     public lineChartLabels: Array<any> = [];
@@ -47,6 +48,7 @@ export class ByTypeSpecificComponent {
     private getDataInternal(startDate: string, endDate: string) {
         this.theDataSource = this.http.get(this.apiURL + 'calls/count/' + startDate + '/' + endDate + "?type=" + this.type).map(res => res.json());
         this.theRadarDataSource = this.http.get(this.apiURL + 'calls/count/per-zip/' + startDate + '/' + endDate + "?type=" + this.type).map(res => res.json());
+        this.busy = this.theDataSource.toPromise();
         //this.days = days;
 
         // Get the data from the REST server
