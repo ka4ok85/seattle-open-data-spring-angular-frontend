@@ -89,7 +89,14 @@ export class ByZipSpecificComponent {
 
     /* CHARTS */
     private buildLineChart(labels: String[], dataCounts: String[]) {
-        this.lineChartData = [{ data: dataCounts, label: this.zip + ' 911 Calls #' }];
+        let labelZip: string;
+        if (this.zip == '0') {
+            labelZip = 'No ZIP';
+        } else {
+            labelZip = this.zip;
+        }        
+
+        this.lineChartData = [{ data: dataCounts, label: labelZip + ' 911 Calls #' }];
         let labelsCount = this.lineChartLabels.length;
         for (var index = 0; index < labelsCount; index++) {
             this.lineChartLabels.pop();
