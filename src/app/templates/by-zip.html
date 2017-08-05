@@ -35,7 +35,9 @@
                 <div [ngBusy]="busy"></div>
                 <div class="columns">
                     <ul *ngFor="let record of rawData">
-                        <li><a href="" [routerLink]="['/by-zip', record[1]]">{{record[1]}} ({{record[0]}})</a></li>
+                        <li *ngIf="record[1]; then thenBlock else elseBlock"></li>
+                            <ng-template #thenBlock><a href="" [routerLink]="['/by-zip', record[1]]">{{record[1]}} ({{record[0]}})</a></ng-template>
+                            <ng-template #elseBlock><a href="" [routerLink]="['/by-zip', '0']">No ZIP ({{record[0]}})</a></ng-template>
                     </ul>
                 </div>
             </div>
