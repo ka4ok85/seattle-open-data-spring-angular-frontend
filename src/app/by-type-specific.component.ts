@@ -104,6 +104,10 @@ export class ByTypeSpecificComponent {
         }
 
         for (let label of labels) {
+            if (label == null) {
+                label = 'No ZIP';
+            }
+
             this.radarChartLabels.push(label);
         }
 
