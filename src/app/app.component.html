@@ -4,7 +4,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-        <!-- Brand and toggle get grouped for better mobile display -->
+        <!-- Toggle get grouped for better mobile display -->
           <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
               <i class="fa fa-bars">Toggle</i>
@@ -16,9 +16,8 @@
               <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"><a href="#home" [routerLink]="['/']">Home</a></li>
               <li [routerLinkActive]="['active']" ><a href="#by-type" [routerLink]="['/by-type']">By Type</a></li>
               <li [routerLinkActive]="['active']" ><a href="#by-zip" [routerLink]="['/by-zip']">By Zip</a></li>
-              <!--
-              <li [routerLinkActive]="['active']"><a href="#by-type" [routerLink]="['/by-type', 1234]">By Type 123</a></li>
-              <li><a href="#about" [routerLink]="['/about']">About</a></li> -->
+              <li [routerLinkActive]="['active']" ><a href="#hourly" [routerLink]="['/hourly']">Hourly</a></li>
+              <li><a href="#about" [routerLink]="['/about']">About</a></li>
             </ul>
           </div>
         <!-- /.Navbar-collapse -->
