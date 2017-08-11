@@ -11,7 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import 'chart.js/src/chart.js';
-import {BusyModule} from 'angular2-busy';
+import { BusyModule } from 'angular2-busy';
 
 import { AboutComponent } from "./about.component";
 import { DateRangeFormComponent } from "./date-range-form-component.component";
@@ -22,6 +22,7 @@ import { ByTypeComponent } from "./by-type.component";
 import { ByTypeSpecificComponent } from "./by-type-specific.component";
 import { ByZipComponent } from "./by-zip.component";
 import { ByZipSpecificComponent } from "./by-zip-specific.component";
+import { HourlyComponent } from "./hourly.component";
 import { routing } from "./app.routing";
 
 import { EnvironmentSpecificService } from "./core/services/environment-specific.service";
@@ -32,7 +33,7 @@ import { MyDatePickerModule } from 'mydatepicker';
 
 @NgModule({
   declarations: [
-    AppComponent, HomeComponent, ByTypeComponent, ByTypeSpecificComponent, ByZipComponent, ByZipSpecificComponent, AboutComponent, DateRangeFormComponent, DateRangeQuickButtonsComponent
+    AppComponent, HomeComponent, ByTypeComponent, ByTypeSpecificComponent, ByZipComponent, ByZipSpecificComponent, HourlyComponent, AboutComponent, DateRangeFormComponent, DateRangeQuickButtonsComponent
   ],
   imports: [
     BrowserModule, RouterModule, routing, ChartsModule, HttpModule, MyDatePickerModule, FormsModule, ReactiveFormsModule, BusyModule, BrowserAnimationsModule
