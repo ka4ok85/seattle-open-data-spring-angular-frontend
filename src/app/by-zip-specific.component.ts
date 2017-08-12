@@ -31,7 +31,6 @@ export class ByZipSpecificComponent {
 
     constructor(private http: Http, private route: ActivatedRoute, private dateRangeUtils: DateRangeUtils) {
         this.zip = route.snapshot.paramMap.get('zip');
-        console.log(this.zip);
     }
 
     ngOnInit() {
