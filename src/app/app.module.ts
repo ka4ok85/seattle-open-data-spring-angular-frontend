@@ -23,6 +23,8 @@ import { ByTypeSpecificComponent } from "./by-type-specific.component";
 import { ByZipComponent } from "./by-zip.component";
 import { ByZipSpecificComponent } from "./by-zip-specific.component";
 import { HourlyComponent } from "./hourly.component";
+import { HourlyByZipComponent } from "./hourly-by-zip.component";
+
 import { routing } from "./app.routing";
 
 import { EnvironmentSpecificService } from "./core/services/environment-specific.service";
@@ -33,7 +35,7 @@ import { MyDatePickerModule } from 'mydatepicker';
 
 @NgModule({
   declarations: [
-    AppComponent, HomeComponent, ByTypeComponent, ByTypeSpecificComponent, ByZipComponent, ByZipSpecificComponent, HourlyComponent, AboutComponent, DateRangeFormComponent, DateRangeQuickButtonsComponent
+    AppComponent, HomeComponent, ByTypeComponent, ByTypeSpecificComponent, ByZipComponent, ByZipSpecificComponent, HourlyComponent, HourlyByZipComponent, AboutComponent, DateRangeFormComponent, DateRangeQuickButtonsComponent
   ],
   imports: [
     BrowserModule, RouterModule, routing, ChartsModule, HttpModule, MyDatePickerModule, FormsModule, ReactiveFormsModule, BusyModule, BrowserAnimationsModule
