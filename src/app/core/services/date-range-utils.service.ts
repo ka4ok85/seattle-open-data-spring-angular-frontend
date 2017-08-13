@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IMyDate } from 'mydatepicker';
+import { FormDateRange } from "../models/form-date-range";
 
 @Injectable()
 export class DateRangeUtils {
@@ -18,7 +19,7 @@ export class DateRangeUtils {
 
     public getIntlFormattedRangeForPastDays(days: number) {
         let result: Array<string> = [];
-        
+
         let date = new Date();
         let year = date.getFullYear();
         let month = date.getMonth() + 1;
@@ -37,7 +38,34 @@ export class DateRangeUtils {
 
         result['start'] = startDateFormatted;
         result['end'] = endDateFormatted;
-        
+
         return result;
+    }
+
+
+    public getFormDateRangeForPastDays(days: number) {
+        let result: Array<string> = [];
+
+        let date = new Date();
+        let year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+
+        let iMyDate = { year: year, month: month, day: day }
+        let endDateFormatted: string = this.dateToIntlFormattedString(iMyDate);
+
+        date.setDate(date.getDate() - days);
+        year = date.getFullYear();
+        month = date.getMonth() + 1;
+        day = date.getDate();
+
+        iMyDate = { year: year, month: month, day: day }
+        let startDateFormatted: string = this.dateToIntlFormattedString(iMyDate);
+
+        let formDateRange: FormDateRange = new FormDateRange();
+        formDateRange.startDate = startDateFormatted;
+        formDateRange.endDate = endDateFormatted;
+
+        return formDateRange;
     }
 }
