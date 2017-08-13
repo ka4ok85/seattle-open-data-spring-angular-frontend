@@ -1,0 +1,7 @@
+<h3 class="text-center" >BY ZIP !!!! Hourly Breakdown for 911 Calls</h3>
+<div [ngBusy]="busy"></div>
+<div id="chart" style="position: relative; height:400px; width:700px">
+    <canvas baseChart id="baseChart" #baseChart width="700" height="400" [datasets]="barChartData" [labels]="barChartLabels"
+        [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" [colors]="barChartColors" (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)"></canvas>
+</div>
