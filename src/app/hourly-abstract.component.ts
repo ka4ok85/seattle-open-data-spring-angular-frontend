@@ -2,16 +2,12 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from "rxjs/Observable";
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EnvSpecific } from 'app/core/models/env-specific';
 import { FormDateRange } from "./core/models/form-date-range";
 import { DateRangeUtils } from "./core/services/date-range-utils.service";
-import { EventEmitter, Input, Output } from '@angular/core';
-import { ViewChild } from '@angular/core';
-import { MissionService } from './core/services/mission.service';
 import { Subscription } from 'rxjs/Subscription';
-
 
 @Component({
     selector: '',
@@ -19,38 +15,29 @@ import { Subscription } from 'rxjs/Subscription';
     styles: ['']
 })
 
-export class HourlyAbstractComponent {
+export class HourlyAbstractComponent implements OnDestroy {
     theDataSource: Observable<string>;
     apiURL: string;
-    days: Number;
+    days: number;
     busy: Promise<any>;
-    subscription: Subscription;
 
-
+    protected dateRangeSubscription: Subscription;
+    protected daysSubscription: Subscription;
 
     protected hourlyCountsApiURL: string;
 
     public rawData = [];
     public barChartData: Array<any> = [{ data: [] }];
     public barChartLabels: string[] = [];
+    constructor(protected http: Http, protected route: ActivatedRoute, protected dateRangeUtils: DateRangeUtils) { }
 
-    constructor(protected http: Http, protected route: ActivatedRoute, protected dateRangeUtils: DateRangeUtils, private missionService: MissionService) {
-        this.subscription = missionService.missionAnnounced$.subscribe(
-            mission => {
-                console.log("oppa:" + mission);
-            });
+    public setHourlyCountsApiURL(dateRange: FormDateRange) { }
+
+    public getData(dateRange: FormDateRange) {
+        this.getDataInternal();
     }
 
-    public setHourlyCountsApiURL(days: number) { }
-
-    public getData(days: number) {
-        console.log("base getData");
-        let range = this.dateRangeUtils.getIntlFormattedRangeForPastDays(days);
-        this.getDataInternal(range['start'], range['end']);
-    }
-
-    private getDataInternal(startDate: string, endDate: string) {
-        console.log(this.hourlyCountsApiURL);
+    private getDataInternal() {
         this.theDataSource = this.http.get(this.hourlyCountsApiURL).map(res => res.json());
         this.busy = this.theDataSource.toPromise();
         //this.days = days;
@@ -73,6 +60,12 @@ export class HourlyAbstractComponent {
             () => console.log('Counts are retrieved')
         );
 
+    }
+
+    ngOnDestroy() {
+        // prevent memory leak when component destroyed
+        this.daysSubscription.unsubscribe();
+        this.dateRangeSubscription.unsubscribe();
     }
 
     /* CHARTS */
@@ -115,13 +108,5 @@ export class HourlyAbstractComponent {
     }
     public chartHovered(e: any): void {
     }
-
-    /* FORMS */
-    public onDateRangeFormSubmit(formDateRange: FormDateRange): void {
-        this.getDataInternal(formDateRange.startDate, formDateRange.endDate);
-    }
-
-
-
 
 }
