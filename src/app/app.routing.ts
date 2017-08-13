@@ -5,6 +5,8 @@ import { ByTypeSpecificComponent } from "./by-type-specific.component";
 import { ByZipComponent } from "./by-zip.component";
 import { ByZipSpecificComponent } from "./by-zip-specific.component";
 import { HourlyComponent } from "./hourly.component";
+import { HourlyAllComponent } from "./hourly-all.component";
+import { HourlyByZipComponent } from "./hourly-by-zip.component";
 import { AboutComponent } from "./about.component";
 import { EnvironmentSpecificResolver } from './core/services/environment-specific-resolver.service';
 
@@ -17,9 +19,9 @@ const routes: Routes = [
   {
     path: 'hourly', component: HourlyComponent, resolve: { envSpecific: EnvironmentSpecificResolver },
     children: [
+      { path: '', component: HourlyAllComponent, resolve: { envSpecific: EnvironmentSpecificResolver } },
       { path: 'by-type/:type', component: ByTypeComponent, resolve: { envSpecific: EnvironmentSpecificResolver } },
-      { path: 'by-zip/:zip', component: ByTypeComponent, resolve: { envSpecific: EnvironmentSpecificResolver } },
-      { path: '', component: ByTypeComponent, resolve: { envSpecific: EnvironmentSpecificResolver } }
+      { path: 'by-zip/:zip', component: HourlyByZipComponent, resolve: { envSpecific: EnvironmentSpecificResolver } }
     ]
   },
 
