@@ -22,7 +22,9 @@ import { ByTypeComponent } from "./by-type.component";
 import { ByTypeSpecificComponent } from "./by-type-specific.component";
 import { ByZipComponent } from "./by-zip.component";
 import { ByZipSpecificComponent } from "./by-zip-specific.component";
+import { HourlyAllComponent } from "./hourly-all.component";
 import { HourlyComponent } from "./hourly.component";
+import { HourlyAbstractComponent } from "./hourly-abstract.component";
 import { HourlyByZipComponent } from "./hourly-by-zip.component";
 
 import { routing } from "./app.routing";
@@ -30,17 +32,18 @@ import { routing } from "./app.routing";
 import { EnvironmentSpecificService } from "./core/services/environment-specific.service";
 import { EnvironmentSpecificResolver } from "./core/services/environment-specific-resolver.service";
 import { DateRangeUtils } from "./core/services/date-range-utils.service";
+import { DateUpdatesService } from './core/services/date-updates.service';
 
 import { MyDatePickerModule } from 'mydatepicker';
 
 @NgModule({
   declarations: [
-    AppComponent, HomeComponent, ByTypeComponent, ByTypeSpecificComponent, ByZipComponent, ByZipSpecificComponent, HourlyComponent, HourlyByZipComponent, AboutComponent, DateRangeFormComponent, DateRangeQuickButtonsComponent
+    AppComponent, HomeComponent, ByTypeComponent, ByTypeSpecificComponent, ByZipComponent, ByZipSpecificComponent, HourlyComponent, HourlyAbstractComponent, HourlyAllComponent, HourlyByZipComponent, AboutComponent, DateRangeFormComponent, DateRangeQuickButtonsComponent
   ],
   imports: [
     BrowserModule, RouterModule, routing, ChartsModule, HttpModule, MyDatePickerModule, FormsModule, ReactiveFormsModule, BusyModule, BrowserAnimationsModule
   ],
-  providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }, EnvironmentSpecificService, EnvironmentSpecificResolver, DateRangeUtils],
+  providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }, EnvironmentSpecificService, EnvironmentSpecificResolver, DateRangeUtils, DateUpdatesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
