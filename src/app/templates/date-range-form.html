@@ -1,27 +1,27 @@
-        <h3 style="margin: 10px 0px;">Custom range</h3>
-        <div style="width:250px">
-          <form [formGroup]="rangeFormModel" (ngSubmit)="onDatepickerFormSubmit()" novalidate>
-            <div [formGroup]="rangeForm">
-              <div class="form-group">
-                <label class="control-label" for="startdate" style="float:left; width:90px; margin-top:5px;">Start Date:</label>
-                <div style="margin-left:10px;">
-                  <my-date-picker name="startdate" [options]="myDatePickerOptions" formControlName="startdate"></my-date-picker>
-                  <div class="alert alert-danger" *ngIf="rangeForm.controls.startdate.errors?.required">Start Date is required!</div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="control-label" for="enddate" style="float:left; width:90px; margin-top:5px;">End Date:</label>
-                <div style="margin-left:10px;">
-                  <my-date-picker name="enddate" [options]="myDatePickerOptions" formControlName="enddate"></my-date-picker>
-                  <div class="alert alert-danger" *ngIf="rangeForm.controls.enddate.errors?.required">End Date is required!</div>
-                  <div class="alert alert-danger" *ngIf="rangeForm.errors?.badRange">End Date must be after Start Date!</div>
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="col-xs-12 text-left">
-                <button type="submit" class="btn btn-default" [disabled]="!rangeFormModel.valid" >Query</button>
-              </div>
-            </div>
-          </form>
+<h3 style="margin: 10px 0px;">Custom range</h3>
+<div style="width:250px">
+  <form [formGroup]="rangeFormModel" (ngSubmit)="onDatepickerFormSubmit()" novalidate>
+    <div [formGroup]="rangeForm">
+      <div class="form-group">
+        <label class="control-label" for="startdate" style="float:left; width:90px; margin-top:5px;">Start Date:</label>
+        <div style="margin-left:10px;">
+          <my-date-picker name="startdate" [options]="myDatePickerOptions" formControlName="startdate"></my-date-picker>
+          <div class="alert alert-danger" *ngIf="rangeForm.controls.startdate.errors?.required">Start Date is required!</div>
         </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="enddate" style="float:left; width:90px; margin-top:5px;">End Date:</label>
+        <div style="margin-left:10px;">
+          <my-date-picker name="enddate" [options]="myDatePickerOptions" formControlName="enddate"></my-date-picker>
+          <div class="alert alert-danger" *ngIf="rangeForm.controls.enddate.errors?.required">End Date is required!</div>
+          <div class="alert alert-danger" *ngIf="rangeForm.errors?.badRange">End Date must be after Start Date!</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-xs-12 text-left">
+        <button type="submit" class="btn btn-default" [disabled]="!rangeFormModel.valid">Query</button>
+      </div>
+    </div>
+  </form>
+</div>
