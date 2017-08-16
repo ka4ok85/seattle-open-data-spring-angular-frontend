@@ -15,6 +15,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8" style="min-width:700px">
+                <h3 class="text-center"><a href="" [routerLink]="['/hourly', 'by-zip', zip]">See Hourly</a></h3>
                 <h3 class="text-center">Calls per day</h3>
                 <div [ngBusy]="busy"></div>
                 <div id="chart" style="position: relative; height:400px; width:700px">
