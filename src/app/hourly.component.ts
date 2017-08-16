@@ -12,6 +12,7 @@ export class HourlyComponent {
 
     constructor(private dateUpdatesService: DateUpdatesService) { }
 
+    public days;
     public onDateRangeQuickButtonClick(days: number): void {
         this.dateUpdatesService.passDays(days);
     }
