@@ -13,6 +13,7 @@ import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { IMyDpOptions, IMyOptions, IMyInputFieldChanged, IMyDate } from 'mydatepicker';
+import { Angulartics2 } from 'angulartics2';
 
 @Component({
   selector: 'dateRangeForm',
@@ -32,12 +33,15 @@ export class DateRangeFormComponent {
 
   public rangeFormModel: FormGroup;
   public rangeForm: FormGroup;
+  private angulartics2: Angulartics2;
 
-  constructor(private http: Http, private route: ActivatedRoute, formBuilder: FormBuilder, private dateRangeUtils: DateRangeUtils) {
+  constructor(private http: Http, private route: ActivatedRoute, formBuilder: FormBuilder, private dateRangeUtils: DateRangeUtils, angulartics2: Angulartics2) {
     let date = new Date();
     let year = date.getFullYear();
     let month = date.getMonth();
     let day = date.getDate();
+
+    this.angulartics2 = angulartics2;
 
     // sub-form
     this.rangeForm = formBuilder.group(
@@ -70,6 +74,9 @@ export class DateRangeFormComponent {
     let formDateRange: FormDateRange = new FormDateRange();
     formDateRange.startDate = startDateFormatted;
     formDateRange.endDate = endDateFormatted;
+
+    // google analytics event
+    this.angulartics2.eventTrack.next({ action: 'Date Range Form Submit', properties: { category: 'Date Range', label: 'Date Range Form Submitted' } });
 
     this.onDateRangeFormSubmit.emit(formDateRange);
   }
