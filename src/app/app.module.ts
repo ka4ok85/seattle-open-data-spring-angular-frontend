@@ -8,6 +8,7 @@ import { PathLocationStrategy } from "@angular/common";
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Angulartics2Module, Angulartics2GoogleAnalytics } from 'angulartics2';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import 'chart.js/src/chart.js';
@@ -26,6 +27,7 @@ import { HourlyAllComponent } from "./hourly-all.component";
 import { HourlyComponent } from "./hourly.component";
 import { HourlyAbstractComponent } from "./hourly-abstract.component";
 import { HourlyByZipComponent } from "./hourly-by-zip.component";
+import { HourlyByTypeComponent } from "./hourly-by-type.component";
 
 import { routing } from "./app.routing";
 
@@ -38,10 +40,34 @@ import { MyDatePickerModule } from 'mydatepicker';
 
 @NgModule({
   declarations: [
-    AppComponent, HomeComponent, ByTypeComponent, ByTypeSpecificComponent, ByZipComponent, ByZipSpecificComponent, HourlyComponent, HourlyAbstractComponent, HourlyAllComponent, HourlyByZipComponent, AboutComponent, DateRangeFormComponent, DateRangeQuickButtonsComponent
+    AppComponent,
+    HomeComponent,
+    ByTypeComponent,
+    ByTypeSpecificComponent,
+    ByZipComponent,
+    ByZipSpecificComponent,
+    HourlyComponent,
+    HourlyAbstractComponent,
+    HourlyAllComponent,
+    HourlyByZipComponent,
+    HourlyByTypeComponent,
+    AboutComponent,
+    DateRangeFormComponent,
+    DateRangeQuickButtonsComponent
   ],
   imports: [
-    BrowserModule, RouterModule, routing, ChartsModule, HttpModule, MyDatePickerModule, FormsModule, ReactiveFormsModule, BusyModule, BrowserAnimationsModule
+    BrowserModule, 
+    RouterModule, 
+    routing, 
+    ChartsModule, 
+    HttpModule, 
+    MyDatePickerModule, 
+    FormsModule, 
+    ReactiveFormsModule, 
+    BusyModule, 
+    BrowserAnimationsModule, 
+    Angulartics2Module.forRoot([ Angulartics2GoogleAnalytics ]),
+    Angulartics2Module.forChild()
   ],
   providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }, EnvironmentSpecificService, EnvironmentSpecificResolver, DateRangeUtils, DateUpdatesService],
   bootstrap: [AppComponent]
