@@ -24,6 +24,8 @@ export class ByZipSpecificComponent {
     days: Number;
     busy: Promise<any>;
 
+    public startDate;
+    public endDate;
     public lineChartData: Array<any> = [{ data: [] }];
     public lineChartLabels: Array<any> = [];
     public pieChartLabels: String[] = [];
@@ -48,6 +50,8 @@ export class ByZipSpecificComponent {
     }
 
     private getDataInternal(startDate: string, endDate: string) {
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.theDataSource = this.http.get(this.apiURL + 'calls/count/' + startDate + '/' + endDate + "?zip=" + this.zip).map(res => res.json());
         this.thePieDataSource = this.http.get(this.apiURL + 'calls/count/per-type/' + startDate + '/' + endDate + "?zip=" + this.zip).map(res => res.json());
         this.busy = this.theDataSource.toPromise();
@@ -93,9 +97,9 @@ export class ByZipSpecificComponent {
             labelZip = 'No ZIP';
         } else {
             labelZip = this.zip;
-        }        
+        }
 
-        this.lineChartData = [{ data: dataCounts, label: labelZip + ' 911 Calls #' }];
+        this.lineChartData = [{ data: dataCounts, label: 'Number of calls per day' }];
         let labelsCount = this.lineChartLabels.length;
         for (var index = 0; index < labelsCount; index++) {
             this.lineChartLabels.pop();
