@@ -22,6 +22,8 @@ export class ByTypeSpecificComponent {
     days: Number;
     busy: Promise<any>;
 
+    public startDate;
+    public endDate;
     public lineChartData: Array<any> = [{ data: [] }];
     public lineChartLabels: Array<any> = [];
     public radarChartLabels: String[] = [];
@@ -46,6 +48,8 @@ export class ByTypeSpecificComponent {
     }
 
     private getDataInternal(startDate: string, endDate: string) {
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.theDataSource = this.http.get(this.apiURL + 'calls/count/' + startDate + '/' + endDate + "?type=" + this.type).map(res => res.json());
         this.theRadarDataSource = this.http.get(this.apiURL + 'calls/count/per-zip/' + startDate + '/' + endDate + "?type=" + this.type).map(res => res.json());
         this.busy = this.theDataSource.toPromise();
@@ -63,8 +67,7 @@ export class ByTypeSpecificComponent {
 
                 this.buildLineChart(dataLabels, dataCounts);
             },
-            err => console.log("Can't get Counts. Error code: %s, URL: %s ", err.status, err.url),
-            () => console.log('Counts are retrieved')
+            err => console.log("Can't get Counts. Error code: %s, URL: %s ", err.status, err.url)
         );
 
         this.theRadarDataSource.subscribe(
@@ -78,13 +81,12 @@ export class ByTypeSpecificComponent {
 
                 this.buildRadarChart(dataLabels, dataCounts);
             },
-            err => console.log("Can't get Radar Chart Counts. Error code: %s, URL: %s ", err.status, err.url),
-            () => console.log('Radar Chart Counts are retrieved')
+            err => console.log("Can't get Radar Chart Counts. Error code: %s, URL: %s ", err.status, err.url)
         );
     }
 
     private buildLineChart(labels: String[], dataCounts: String[]) {
-        this.lineChartData = [{ data: dataCounts, label: this.type + ' 911 Calls #' }];
+        this.lineChartData = [{ data: dataCounts, label: 'Number of calls per day' }];
         let labelsCount = this.lineChartLabels.length;
         for (var index = 0; index < labelsCount; index++) {
             this.lineChartLabels.pop();
@@ -97,7 +99,7 @@ export class ByTypeSpecificComponent {
 
     /* CHARTS */
     private buildRadarChart(labels: String[], dataCounts: String[]) {
-        this.radarChartData = [{ data: dataCounts, label: this.type + ' 911 Calls #' }];
+        this.radarChartData = [{ data: dataCounts, label: 'Breakdown by zip code' }];
         let labelsCount = this.radarChartLabels.length;
         for (var index = 0; index < labelsCount; index++) {
             this.radarChartLabels.pop();
