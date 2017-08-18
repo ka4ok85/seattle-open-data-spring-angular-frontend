@@ -20,6 +20,8 @@ export class ByZipComponent {
     days: Number;
     busy: Promise<any>;
 
+    public startDate;
+    public endDate;
     public rawData = [];
     public barChartData: Array<any> = [{ data: [] }];
     public barChartLabels: string[] = [];
@@ -43,6 +45,8 @@ export class ByZipComponent {
     }
 
     private getDataInternal(startDate: string, endDate: string) {
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.theDataSource = this.http.get(this.apiURL + 'calls/count/per-zip/' + startDate + '/' + endDate).map(res => res.json());
         this.busy = this.theDataSource.toPromise();
         //this.days = days;
@@ -90,7 +94,7 @@ export class ByZipComponent {
 
     /* CHARTS */
     private buildBarChart(labels: string[], dataCounts: string[]) {
-        this.barChartData = [{ data: dataCounts, label: 'Top 5 Call Zip Codes' }];
+        this.barChartData = [{ data: dataCounts, label: 'Number of calls per day' }];
         let labelsCount = this.barChartLabels.length;
         for (var index = 0; index < labelsCount; index++) {
             this.barChartLabels.pop();
