@@ -4,9 +4,9 @@
             <div class="col-lg-8 col-lg-offset-2">
                 <div class="section-heading text-center">
                     <div>
-                        <h2>Seattle 911 Calls</h2>
+                        <h2>Seattle 9-1-1 Calls</h2>
                     </div>
-                    <p>Reported Seattle 911 Calls for past {{days}} days</p>
+                    <p>Emergency 9-1-1 calls reported in Seattle</p>
                 </div>
             </div>
         </div>
@@ -15,7 +15,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8" style="min-width:700px">
-                <h3 class="text-center">Top 5 911 Calls Zip Codes</h3>
+                <h3 class="text-center">Top 5 Calls zip codes from <span class='blue'>{{startDate | date: 'dd/MM/yyyy'}}</span> to <span class='blue'>{{endDate | date: 'dd/MM/yyyy'}}</span></h3>
                 <div [ngBusy]="busy"></div>
                 <div id="chart" style="position: relative; height:400px; width:700px">
                     <canvas baseChart id="baseChart" #baseChart width="700" height="400" [datasets]="barChartData" [labels]="barChartLabels"
@@ -31,7 +31,7 @@
         <div class="row">&nbsp;</div>
         <div class="row">
             <div class="col-md-8">
-                <h3 class="text-center">Breakdown by Zip</h3>
+                <h3 class="text-center">Calls breakdown by zip code from <span class='blue'>{{startDate | date: 'dd/MM/yyyy'}}</span> to <span class='blue'>{{endDate | date: 'dd/MM/yyyy'}}</span></h3>
                 <div [ngBusy]="busy"></div>
                 <div class="columns">
                     <ul *ngFor="let record of rawData">
