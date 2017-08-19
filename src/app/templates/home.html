@@ -4,9 +4,9 @@
       <div class="col-lg-8 col-lg-offset-2">
         <div class="section-heading text-center">
           <div>
-            <h2>Seattle 911 Calls</h2>
+            <h2>Seattle 9-1-1 Calls</h2>
           </div>
-          <p>Reported Seattle 911 Calls for past {{days}} days</p>
+          <p>Emergency 9-1-1 calls reported in Seattle</p>
         </div>
       </div>
     </div>
@@ -15,7 +15,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-8" style="min-width:700px">
-        <h3 class="text-center">Calls per day</h3>
+        <h3 class="text-center">Calls from <span class='blue'>{{startDate | date: 'MM/dd/yyyy'}}</span> to <span class='blue'>{{endDate | date: 'MM/dd/yyyy'}}</span></h3>
         <div [ngBusy]="busy"></div>
         <div id="chart" style="position: relative; height:400px; width:700px">
           <canvas baseChart id="baseChart" #baseChart width="700" height="400" [datasets]="lineChartData" [labels]="lineChartLabels"
@@ -32,7 +32,7 @@
     <div class="row">&nbsp;</div>
     <div class="row">
       <div class="col-md-8">
-        <h3 class="text-center">Breakdown by type</h3>
+        <h3 class="text-center">Calls breakdown by type from <span class='blue'>{{startDate | date: 'MM/dd/yyyy'}}</span> to <span class='blue'>{{endDate | date: 'MM/dd/yyyy'}}</span></h3>
         <div [ngBusy]="busy"></div>
         <div id="pieChartContainer" style="position: relative; height:400px; width:700px">
           <canvas baseChart id="pieChart" #pieChart width="700" height="400" [data]="pieChartData" [labels]="pieChartLabels" [options]="pieChartOptions"
