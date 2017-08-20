@@ -14,7 +14,7 @@
 
   <div class="container">
     <div class="row">
-      <div class="col-md-8" style="min-width:700px">
+      <div class="col-md-8" style="min-width:700px" id="graph1">
         <h3 class="text-center">Calls from <span class='blue'>{{startDate | date: 'MM/dd/yyyy'}}</span> to <span class='blue'>{{endDate | date: 'MM/dd/yyyy'}}</span></h3>
         <div [ngBusy]="busy"></div>
         <div id="chart" style="position: relative; height:400px; width:700px">
@@ -24,14 +24,14 @@
           </canvas>
         </div>
       </div>
-      <div class="col-md-4" style="margin-bottom: 10px;min-width:250px;">
+      <div class="col-md-4" style="margin-bottom: 10px;min-width:250px;" id="date-filters">
         <dateRangeQuickButtons (onDateRangeQuickButtonClick)="onDateRangeQuickButtonClick($event)"></dateRangeQuickButtons>
         <dateRangeForm (onDateRangeFormSubmit)="onDateRangeFormSubmit($event)"> </dateRangeForm>
       </div>
     </div>
     <div class="row">&nbsp;</div>
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-8" id="graph2">
         <h3 class="text-center">Calls breakdown by type from <span class='blue'>{{startDate | date: 'MM/dd/yyyy'}}</span> to <span class='blue'>{{endDate | date: 'MM/dd/yyyy'}}</span></h3>
         <div [ngBusy]="busy"></div>
         <div id="pieChartContainer" style="position: relative; height:400px; width:700px">
