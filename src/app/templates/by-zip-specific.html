@@ -4,9 +4,9 @@
             <div class="col-lg-8 col-lg-offset-2">
                 <div class="section-heading text-center">
                     <div>
-                        <h2>Seattle 911 Calls</h2>
+                        <h2>Seattle 9-1-1 Calls</h2>
                     </div>
-                    <p>Reported Seattle 911 Calls for past {{days}} days</p>
+                    <p>Emergency 9-1-1 calls reported in Seattle</p>
                 </div>
             </div>
         </div>
@@ -15,8 +15,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8" style="min-width:700px">
-                <h3 class="text-center"><a href="" [routerLink]="['/hourly', 'by-zip', zip]">See Hourly</a></h3>
-                <h3 class="text-center">Calls per day</h3>
+                <h3 style="margin-right:25px; text-align: right;"><a href="" [routerLink]="['/hourly', 'by-zip', zip]">See hourly breakdown &raquo;</a></h3>
+                <h3 class="text-center">Calls for zip code "{{zip}}" from <span class='blue'>{{startDate | date: 'dd/MM/yyyy'}}</span> to <span class='blue'>{{endDate | date: 'dd/MM/yyyy'}}</span></h3>
                 <div [ngBusy]="busy"></div>
                 <div id="chart" style="position: relative; height:400px; width:700px">
                     <canvas baseChart id="baseChart" #baseChart width="700" height="400" [datasets]="lineChartData" [labels]="lineChartLabels"
@@ -34,7 +34,7 @@
         <div class="row">&nbsp;</div>
         <div class="row">
             <div class="col-md-8">
-                <h3 class="text-center">Breakdown by Zip Code</h3>
+                <h3 class="text-center">Calls breakdown by Type for zip code "{{zip}}" from <span class='blue'>{{startDate | date: 'dd/MM/yyyy'}}</span> to <span class='blue'>{{endDate | date: 'dd/MM/yyyy'}}</span></h3>
                 <div [ngBusy]="busy"></div>
                 <div id="pieChartContainer" style="position: relative; height:400px; width:700px">
                     <canvas baseChart id="pieChart" #pieChart width="700" height="400" [data]="pieChartData" [labels]="pieChartLabels" [options]="pieChartOptions"
