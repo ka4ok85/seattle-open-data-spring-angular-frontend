@@ -23,6 +23,8 @@ export class HomeComponent {
   days: Number;
   busy: Promise<any>;
 
+  public startDate;
+  public endDate;
   public lineChartData: Array<any> = [{ data: [] }];
   public lineChartLabels: Array<any> = [];
   public pieChartLabels: String[] = [];
@@ -46,7 +48,8 @@ export class HomeComponent {
   }
 
   private getDataInternal(startDate: string, endDate: string) {
-    console.log(this.apiURL);
+    this.startDate = startDate;
+    this.endDate = endDate;
     this.theDataSource = this.http.get(this.apiURL + 'calls/count/' + startDate + '/' + endDate).map(res => res.json());
     this.thePieDataSource = this.http.get(this.apiURL + 'calls/count/per-type/' + startDate + '/' + endDate).map(res => res.json());
     this.busy = this.theDataSource.toPromise();
@@ -79,13 +82,12 @@ export class HomeComponent {
         this.buildPieChart(dataLabels, dataCounts);
       },
       err => console.log("Can't get Pie Chart Counts. Error code: %s, URL: %s ", err.status, err.url),
-      () => console.log('Pie Chart Counts are retrieved')
     );
   }
 
   /* CHARTS */
   private buildLineChart(labels: String[], dataCounts: String[]) {
-    this.lineChartData = [{ data: dataCounts, label: '911 Calls #' }];
+    this.lineChartData = [{ data: dataCounts, label: 'Number of 9-1-1 calls per day' }];
     let labelsCount = this.lineChartLabels.length;
     for (var index = 0; index < labelsCount; index++) {
       this.lineChartLabels.pop();
