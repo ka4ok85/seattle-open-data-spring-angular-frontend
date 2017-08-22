@@ -32,7 +32,7 @@
     <div class="row">&nbsp;</div>
     <div class="row">
       <div class="col-md-8" id="graph2">
-        <h3 class="text-center">Calls breakdown by type from <span class='blue'>{{startDate | date: 'MM/dd/yyyy'}}</span> to <span class='blue'>{{endDate | date: 'MM/dd/yyyy'}}</span></h3>
+        <h3 class="text-center">Calls breakdown by Type from <span class='blue'>{{startDate | date: 'MM/dd/yyyy'}}</span> to <span class='blue'>{{endDate | date: 'MM/dd/yyyy'}}</span></h3>
         <div [ngBusy]="busy"></div>
         <div id="pieChartContainer" style="position: relative; height:400px; width:700px">
           <canvas baseChart id="pieChart" #pieChart width="700" height="400" [data]="pieChartData" [labels]="pieChartLabels" [options]="pieChartOptions"
