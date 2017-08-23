@@ -5,14 +5,14 @@
     <div [formGroup]="rangeForm">
       <div class="form-group">
         <label class="control-label" for="startdate" style="float:left; width:90px; margin-top:5px;">Start Date:</label>
-        <div style="margin-left:10px;">
+        <div style="margin-left:10px;" id="start-date">
           <my-date-picker name="startdate" [options]="myDatePickerOptions" formControlName="startdate"></my-date-picker>
           <div class="alert alert-danger" *ngIf="rangeForm.controls.startdate.errors?.required">Start Date is required!</div>
         </div>
       </div>
       <div class="form-group">
         <label class="control-label" for="enddate" style="float:left; width:90px; margin-top:5px;">End Date:</label>
-        <div style="margin-left:10px;">
+        <div style="margin-left:10px;" id="end-date">
           <my-date-picker name="enddate" [options]="myDatePickerOptions" formControlName="enddate"></my-date-picker>
           <div class="alert alert-danger" *ngIf="rangeForm.controls.enddate.errors?.required">End Date is required!</div>
           <div class="alert alert-danger" *ngIf="rangeForm.errors?.badRange">End Date must be after Start Date!</div>
