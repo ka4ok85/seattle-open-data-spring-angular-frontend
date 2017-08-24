@@ -1,4 +1,4 @@
-<section id="home" class="home-section">
+<section id="by-type-specific" class="home-section">
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2">
@@ -16,7 +16,7 @@
     <div class="row">
       <div class="col-md-8" style="min-width:700px">
         <h3 style="margin-right:25px; text-align: right;"><a href="" [routerLink]="['/hourly', 'by-type', type]">See hourly breakdown &raquo;</a></h3>
-        <h3 class="text-center">"{{type}}" calls from <span class='blue'>{{startDate | date: 'dd/MM/yyyy'}}</span> to <span class='blue'>{{endDate | date: 'dd/MM/yyyy'}}</span></h3>
+        <h3 class="text-center">"{{type}}" calls from <span class='blue'>{{startDate | date: 'MM/dd/yyyy'}}</span> to <span class='blue'>{{endDate | date: 'MM/dd/yyyy'}}</span></h3>
         <div [ngBusy]="busy"></div>
         <div id="chart" style="position: relative; height:400px; width:700px">
           <canvas baseChart id="baseChart" #baseChart width="700" height="400" [datasets]="lineChartData" [labels]="lineChartLabels"
@@ -25,7 +25,7 @@
           </canvas>
         </div>
       </div>
-      <div class="col-md-4" style="margin-bottom: 10px">
+      <div class="col-md-4" style="margin-bottom: 10px" id="date-filters">
         <dateRangeQuickButtons (onDateRangeQuickButtonClick)="onDateRangeQuickButtonClick($event)"></dateRangeQuickButtons>
         <dateRangeForm (onDateRangeFormSubmit)="onDateRangeFormSubmit($event)"> </dateRangeForm>
       </div>
@@ -33,7 +33,10 @@
     <div class="row">&nbsp;</div>
     <div class="row">
       <div class="col-md-8">
-        <h3 class="text-center">"{{type}}" calls breakdown by zip code from <span class='blue'>{{startDate | date: 'dd/MM/yyyy'}}</span> to <span class='blue'>{{endDate | date: 'dd/MM/yyyy'}}</span></h3>
+        <h3 class="text-center">"{{type}}" calls breakdown by zip code from <span class='blue'>{{startDate | date: 'MM/dd/yyyy'}}</span> to
+          <span
+            class='blue'>{{endDate | date: 'MM/dd/yyyy'}}</span>
+        </h3>
         <div [ngBusy]="busy"></div>
         <div id="pieChartContainer" style="position: relative; height:400px; width:700px">
           <canvas baseChart id="radarChart" #radarChart width="700" height="400" [datasets]="radarChartData" [labels]="radarChartLabels"
