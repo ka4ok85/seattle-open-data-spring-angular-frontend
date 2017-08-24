@@ -9,7 +9,7 @@ import { FormDateRange } from "./core/models/form-date-range";
 import { DateRangeUtils } from "./core/services/date-range-utils.service";
 
 @Component({
-    selector: 'by-type',
+    selector: '',
     templateUrl: './templates/by-type-specific.html',
     styles: ['']
 })
