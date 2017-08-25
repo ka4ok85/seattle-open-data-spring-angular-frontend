@@ -26,6 +26,8 @@ export class HourlyAbstractComponent implements OnDestroy {
 
     protected hourlyCountsApiURL: string;
 
+    public startDate;
+    public endDate;
     public rawData = [];
     public barChartData: Array<any> = [{ data: [] }];
     public barChartLabels: string[] = [];
@@ -34,6 +36,8 @@ export class HourlyAbstractComponent implements OnDestroy {
     public setHourlyCountsApiURL(dateRange: FormDateRange) { }
 
     public getData(dateRange: FormDateRange) {
+        this.startDate = dateRange.startDate;
+        this.endDate = dateRange.endDate; 
         this.getDataInternal();
     }
 
@@ -70,7 +74,7 @@ export class HourlyAbstractComponent implements OnDestroy {
 
     /* CHARTS */
     private buildBarChart(labels: string[], dataCounts: string[]) {
-        this.barChartData = [{ data: dataCounts, label: 'Hourly Breakdown' }];
+        this.barChartData = [{ data: dataCounts, label: 'Number of calls per hour' }];
         let labelsCount = this.barChartLabels.length;
         for (var index = 0; index < labelsCount; index++) {
             this.barChartLabels.pop();
