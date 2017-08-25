@@ -19,7 +19,7 @@ import { DateUpdatesService } from './core/services/date-updates.service';
 
 export class HourlyByZipComponent extends HourlyAbstractComponent {
 
-    private zip: string;
+    public zip: string;
 
     constructor(protected http: Http, protected route: ActivatedRoute, protected dateRangeUtils: DateRangeUtils, private dateUpdatesService: DateUpdatesService) {
         super(http, route, dateRangeUtils);
