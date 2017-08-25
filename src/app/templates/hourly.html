@@ -1,4 +1,4 @@
-<section id="by-type" class="home-section">
+<section id="hourly" class="home-section">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
@@ -17,7 +17,7 @@
             <div class="col-md-8" style="min-width:700px">
                 <router-outlet></router-outlet>
             </div>
-            <div class="col-md-4" style="margin-bottom: 10px">
+            <div class="col-md-4" style="margin-bottom: 10px" id="date-filters">
                 <dateRangeQuickButtons (onDateRangeQuickButtonClick)="onDateRangeQuickButtonClick($event)"></dateRangeQuickButtons>
                 <dateRangeForm (onDateRangeFormSubmit)="onDateRangeFormSubmit($event)"> </dateRangeForm>
             </div>
