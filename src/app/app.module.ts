@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title }  from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from "@angular/router";
 
@@ -56,7 +56,7 @@ import { MyDatePickerModule } from 'mydatepicker';
     DateRangeQuickButtonsComponent
   ],
   imports: [
-    BrowserModule, 
+    BrowserModule,
     RouterModule, 
     routing, 
     ChartsModule, 
@@ -69,7 +69,7 @@ import { MyDatePickerModule } from 'mydatepicker';
     Angulartics2Module.forRoot([ Angulartics2GoogleAnalytics ]),
     Angulartics2Module.forChild()
   ],
-  providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }, EnvironmentSpecificService, EnvironmentSpecificResolver, DateRangeUtils, DateUpdatesService],
+  providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }, Title, EnvironmentSpecificService, EnvironmentSpecificResolver, DateRangeUtils, DateUpdatesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
