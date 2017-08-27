@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from "rxjs/Observable";
@@ -29,13 +30,14 @@ export class ByTypeSpecificComponent {
     public radarChartLabels: String[] = [];
     public radarChartData: Array<any> = [{ data: [] }];
 
-    constructor(private http: Http, private route: ActivatedRoute, private dateRangeUtils: DateRangeUtils) {
+    constructor(private http: Http, private route: ActivatedRoute, private dateRangeUtils: DateRangeUtils, private titleService: Title) {
         this.type = route.snapshot.paramMap.get('type');
     }
 
     ngOnInit() {
         this.route.data
             .subscribe((data: { envSpecific: EnvSpecific }) => {
+                this.titleService.setTitle(data.envSpecific.title + ' | By Type - ' + this.type);
                 this.apiURL = data.envSpecific.apiURL;
             });
 
