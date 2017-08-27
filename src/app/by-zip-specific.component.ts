@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from "rxjs/Observable";
@@ -31,13 +32,14 @@ export class ByZipSpecificComponent {
     public pieChartLabels: String[] = [];
     public pieChartData: Array<any> = [{ data: [] }];
 
-    constructor(private http: Http, private route: ActivatedRoute, private dateRangeUtils: DateRangeUtils) {
+    constructor(private http: Http, private route: ActivatedRoute, private dateRangeUtils: DateRangeUtils, private titleService: Title) {
         this.zip = route.snapshot.paramMap.get('zip');
     }
 
     ngOnInit() {
         this.route.data
             .subscribe((data: { envSpecific: EnvSpecific }) => {
+                this.titleService.setTitle(data.envSpecific.title + ' | By Zip - ' + this.zip);
                 this.apiURL = data.envSpecific.apiURL;
             });
 
