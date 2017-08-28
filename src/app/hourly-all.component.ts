@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from "rxjs/Observable";
@@ -19,7 +20,7 @@ import { DateUpdatesService } from './core/services/date-updates.service';
 
 export class HourlyAllComponent extends HourlyAbstractComponent {
 
-    constructor(protected http: Http, protected route: ActivatedRoute, protected dateRangeUtils: DateRangeUtils, private dateUpdatesService: DateUpdatesService) {
+    constructor(protected http: Http, protected route: ActivatedRoute, protected dateRangeUtils: DateRangeUtils, private dateUpdatesService: DateUpdatesService, private titleService: Title) {
         super(http, route, dateRangeUtils);
         this.daysSubscription = dateUpdatesService.daysPassed$.subscribe(
             mission => {
@@ -39,6 +40,7 @@ export class HourlyAllComponent extends HourlyAbstractComponent {
     ngOnInit() {
         this.route.data
             .subscribe((data: { envSpecific: EnvSpecific }) => {
+                this.titleService.setTitle(data.envSpecific.title + ' | Hourly');
                 this.apiURL = data.envSpecific.apiURL;
             });
 
