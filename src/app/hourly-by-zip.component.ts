@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from "rxjs/Observable";
@@ -21,7 +22,7 @@ export class HourlyByZipComponent extends HourlyAbstractComponent {
 
     public zip: string;
 
-    constructor(protected http: Http, protected route: ActivatedRoute, protected dateRangeUtils: DateRangeUtils, private dateUpdatesService: DateUpdatesService) {
+    constructor(protected http: Http, protected route: ActivatedRoute, protected dateRangeUtils: DateRangeUtils, private dateUpdatesService: DateUpdatesService, private titleService: Title) {
         super(http, route, dateRangeUtils);
         this.zip = route.snapshot.paramMap.get('zip');
         this.daysSubscription = dateUpdatesService.daysPassed$.subscribe(
@@ -41,6 +42,7 @@ export class HourlyByZipComponent extends HourlyAbstractComponent {
     ngOnInit() {
         this.route.data
             .subscribe((data: { envSpecific: EnvSpecific }) => {
+                this.titleService.setTitle(data.envSpecific.title + ' | Hourly By Zip - ' + this.zip);
                 this.apiURL = data.envSpecific.apiURL;
             });
 
