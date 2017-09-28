@@ -9,6 +9,8 @@ import { HourlyAllComponent } from "./hourly-all.component";
 import { HourlyByZipComponent } from "./hourly-by-zip.component";
 import { HourlyByTypeComponent } from "./hourly-by-type.component";
 import { AboutComponent } from "./about.component";
+import { AdminComponent } from "./admin.component";
+
 import { EnvironmentSpecificResolver } from './core/services/environment-specific-resolver.service';
 
 const routes: Routes = [
@@ -27,6 +29,7 @@ const routes: Routes = [
   },
 
   { path: 'about', component: AboutComponent },
+  { path: 'admin', component: AdminComponent },
 ];
 
 
