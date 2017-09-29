@@ -28,6 +28,7 @@ import { HourlyComponent } from "./hourly.component";
 import { HourlyAbstractComponent } from "./hourly-abstract.component";
 import { HourlyByZipComponent } from "./hourly-by-zip.component";
 import { HourlyByTypeComponent } from "./hourly-by-type.component";
+import { AdminComponent } from "./admin.component";
 
 import { routing } from "./app.routing";
 
@@ -52,6 +53,7 @@ import { MyDatePickerModule } from 'mydatepicker';
     HourlyByZipComponent,
     HourlyByTypeComponent,
     AboutComponent,
+    AdminComponent,
     DateRangeFormComponent,
     DateRangeQuickButtonsComponent
   ],
