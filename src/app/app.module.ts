@@ -1,4 +1,4 @@
-import { BrowserModule, Title }  from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from "@angular/router";
 
@@ -17,6 +17,7 @@ import { BusyModule } from 'angular2-busy';
 import { AboutComponent } from "./about.component";
 import { DateRangeFormComponent } from "./date-range-form-component.component";
 import { DateRangeQuickButtonsComponent } from "./date-range-quick-buttons";
+import { AuthGuard } from "./auth-guard.service";
 
 import { HomeComponent } from "./home.component";
 import { ByTypeComponent } from "./by-type.component";
@@ -59,19 +60,19 @@ import { MyDatePickerModule } from 'mydatepicker';
   ],
   imports: [
     BrowserModule,
-    RouterModule, 
-    routing, 
-    ChartsModule, 
-    HttpModule, 
-    MyDatePickerModule, 
-    FormsModule, 
-    ReactiveFormsModule, 
-    BusyModule, 
-    BrowserAnimationsModule, 
-    Angulartics2Module.forRoot([ Angulartics2GoogleAnalytics ]),
+    RouterModule,
+    routing,
+    ChartsModule,
+    HttpModule,
+    MyDatePickerModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BusyModule,
+    BrowserAnimationsModule,
+    Angulartics2Module.forRoot([Angulartics2GoogleAnalytics]),
     Angulartics2Module.forChild()
   ],
-  providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }, Title, EnvironmentSpecificService, EnvironmentSpecificResolver, DateRangeUtils, DateUpdatesService],
+  providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }, Title, EnvironmentSpecificService, EnvironmentSpecificResolver, DateRangeUtils, DateUpdatesService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
