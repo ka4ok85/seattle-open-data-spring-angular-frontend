@@ -18,6 +18,7 @@ import { AboutComponent } from "./about.component";
 import { DateRangeFormComponent } from "./date-range-form-component.component";
 import { DateRangeQuickButtonsComponent } from "./date-range-quick-buttons";
 import { AuthGuard } from "./auth-guard.service";
+import { AuthService } from "./auth.service";
 
 import { HomeComponent } from "./home.component";
 import { ByTypeComponent } from "./by-type.component";
@@ -72,7 +73,16 @@ import { MyDatePickerModule } from 'mydatepicker';
     Angulartics2Module.forRoot([Angulartics2GoogleAnalytics]),
     Angulartics2Module.forChild()
   ],
-  providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }, Title, EnvironmentSpecificService, EnvironmentSpecificResolver, DateRangeUtils, DateUpdatesService, AuthGuard],
+  providers: [
+    { provide: LocationStrategy, useClass: PathLocationStrategy },
+    Title,
+    EnvironmentSpecificService,
+    EnvironmentSpecificResolver,
+    DateRangeUtils,
+    DateUpdatesService,
+    AuthGuard,
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
