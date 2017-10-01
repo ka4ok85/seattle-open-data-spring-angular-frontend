@@ -11,6 +11,7 @@ import { HourlyByTypeComponent } from "./hourly-by-type.component";
 import { AboutComponent } from "./about.component";
 import { AdminComponent } from "./admin.component";
 import { AuthGuard } from "./auth-guard.service";
+import { LoginComponent } from "./login.component";
 
 
 import { EnvironmentSpecificResolver } from './core/services/environment-specific-resolver.service';
@@ -32,6 +33,7 @@ const routes: Routes = [
 
   { path: 'about', component: AboutComponent },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent },
 ];
 
 
