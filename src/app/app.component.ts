@@ -3,6 +3,7 @@ import { EnvironmentSpecificService } from './core/services/environment-specific
 import { EnvSpecific } from './core/models/env-specific';
 import { EnvironmentSpecificResolver } from './core/services/environment-specific-resolver.service';
 import { Angulartics2GoogleAnalytics } from 'angulartics2';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ export class AppComponent {
   title = 'app';
   apiURL: string;
 
-  constructor(envSpecificSvc: EnvironmentSpecificService, angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics) {
+  constructor(envSpecificSvc: EnvironmentSpecificService, angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics, public authService: AuthService) {
     envSpecificSvc.subscribe(this, this.setApiURL);
   }
 
