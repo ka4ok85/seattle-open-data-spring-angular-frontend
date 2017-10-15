@@ -1,6 +1,28 @@
-<h2>LOGIN</h2>
-<p>{{message}}</p>
-<p>
-  <button (click)="login()"  *ngIf="!authService.isLoggedIn">Login</button>
-  <button (click)="logout()" *ngIf="authService.isLoggedIn">Logout</button>
-</p>
+<section id="by-zip" class="home-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <div class="section-heading text-center">
+                    <div>
+                        <h2>Seattle 9-1-1 Calls</h2>
+                    </div>
+                    <p>Emergency 9-1-1 calls reported in Seattle</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8" style="min-width:700px">
+                <h3 class="text-center">Login Form</h3>
+                <div>
+                    <p>{{message}}</p>
+                    <p>
+                        <button (click)="login()" *ngIf="!authService.isLoggedIn">Login</button>
+                        <button (click)="logout()" *ngIf="authService.isLoggedIn">Logout</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
