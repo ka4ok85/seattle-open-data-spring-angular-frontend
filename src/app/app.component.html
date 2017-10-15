@@ -4,34 +4,30 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-        <!-- Toggle get grouped for better mobile display -->
+          <!-- Toggle get grouped for better mobile display -->
           <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
               <i class="fa fa-bars">Toggle</i>
             </button>
           </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
+          <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="menu">
             <ul class="nav navbar-nav">
               <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"><a href="#home" [routerLink]="['/']">Home</a></li>
-              <li [routerLinkActive]="['active']" ><a href="#by-type" [routerLink]="['/by-type']">By Type</a></li>
-              <li [routerLinkActive]="['active']" ><a href="#by-zip" [routerLink]="['/by-zip']">By Zip</a></li>
-              <li [routerLinkActive]="['active']" ><a href="#hourly" [routerLink]="['/hourly']">Hourly</a></li>
+              <li [routerLinkActive]="['active']"><a href="#by-type" [routerLink]="['/by-type']">By Type</a></li>
+              <li [routerLinkActive]="['active']"><a href="#by-zip" [routerLink]="['/by-zip']">By Zip</a></li>
+              <li [routerLinkActive]="['active']"><a href="#hourly" [routerLink]="['/hourly']">Hourly</a></li>
               <li><a href="#about" [routerLink]="['/about']">About</a></li>
-              <li [routerLinkActive]="['active']" ><a href="#admin" [routerLink]="['/admin']">Admin</a></li>
+              <li [routerLinkActive]="['active']"><a href="#admin" [routerLink]="['/admin']">Admin</a></li>
             </ul>
           </div>
-        <!-- /.Navbar-collapse -->
+          <!-- /.Navbar-collapse -->
         </div>
       </div>
     </div>
     <!-- /.container -->
   </nav>
-  <p>
-    <button (click)="login()"  *ngIf="!authService.isLoggedIn">Login</button>
-    <button (click)="logout()" *ngIf="authService.isLoggedIn">Logout</button>
-  </p>
-</div> 
-<!-- /Navigation -->  
+</div>
+<!-- /Navigation -->
 
 <router-outlet></router-outlet>
