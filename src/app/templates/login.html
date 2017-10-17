@@ -15,6 +15,29 @@
         <div class="row">
             <div class="col-md-8" style="min-width:700px">
                 <h3 class="text-center">Login Form</h3>
+                <form [formGroup]="loginModel" (ngSubmit)="onLoginFormSubmit()" novalidate>
+                    <div [formGroup]="rangeForm">
+                      <div class="form-group">
+                        <label class="control-label" for="startdate" style="float:left; width:90px; margin-top:5px;">Login:</label>
+                        <div style="margin-left:10px;" id="start-date">
+                          <my-date-picker name="startdate" [options]="myDatePickerOptions" formControlName="startdate"></my-date-picker>
+                          <div class="alert alert-danger" *ngIf="rangeForm.controls.startdate.errors?.required">Login is required!</div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label" for="enddate" style="float:left; width:90px; margin-top:5px;">Password:</label>
+                        <div style="margin-left:10px;" id="end-date">
+                          <my-date-picker name="enddate" [options]="myDatePickerOptions" formControlName="enddate"></my-date-picker>
+                          <div class="alert alert-danger" *ngIf="rangeForm.controls.enddate.errors?.required">Password is required!</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-xs-12 text-left">
+                        <button type="submit" class="btn btn-default" [disabled]="!rangeFormModel.valid">Login</button>
+                      </div>
+                    </div>
+                  </form>
                 <div>
                     <p>{{message}}</p>
                     <p>
