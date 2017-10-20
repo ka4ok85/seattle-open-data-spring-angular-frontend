@@ -11,17 +11,14 @@ import { Angulartics2 } from 'angulartics2';
 })
 export class LoginComponent {
 
-    public loginFormModel: FormGroup;
-    public loginForm: FormGroup;
+    private loginFormModel: FormGroup;
+    private loginForm: FormGroup;
+    private submitAttempt = false;
+    private isLoggedIn = false;
+    private badCredentials = false;
+    private apiURL: string;
+    private message: string;
     private angulartics2: Angulartics2;
-
-    public submitAttempt = false;
-    public badCredentials = false;
-    public isLoggedIn = false;
-
-    apiURL: string;
-
-    message: string;
 
     constructor(public authService: AuthService, private route: ActivatedRoute, public router: Router, formBuilder: FormBuilder, angulartics2: Angulartics2) {
         this.setMessage();
@@ -41,13 +38,11 @@ export class LoginComponent {
         });
     }
 
-
     ngOnInit() {
         this.route.data
-        .subscribe((data: { envSpecific: EnvSpecific }) => {
-            this.apiURL = data.envSpecific.apiURL;
-        });
-        console.log(this.apiURL);
+            .subscribe((data: { envSpecific: EnvSpecific }) => {
+                this.apiURL = data.envSpecific.apiURL;
+            });
     }
 
     setMessage() {
@@ -79,8 +74,6 @@ export class LoginComponent {
                 this.isLoggedIn = false
             }
         );
-
-
     }
 
     logout() {
