@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { EnvSpecific } from 'app/core/models/env-specific';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -14,11 +16,14 @@ export class LoginComponent {
     private angulartics2: Angulartics2;
 
     public submitAttempt = false;
+    public badCredentials = false;
     public isLoggedIn = false;
+
+    apiURL: string;
 
     message: string;
 
-    constructor(public authService: AuthService, public router: Router, formBuilder: FormBuilder, angulartics2: Angulartics2) {
+    constructor(public authService: AuthService, private route: ActivatedRoute, public router: Router, formBuilder: FormBuilder, angulartics2: Angulartics2) {
         this.setMessage();
         this.angulartics2 = angulartics2;
 
@@ -36,6 +41,15 @@ export class LoginComponent {
         });
     }
 
+
+    ngOnInit() {
+        this.route.data
+        .subscribe((data: { envSpecific: EnvSpecific }) => {
+            this.apiURL = data.envSpecific.apiURL;
+        });
+        console.log(this.apiURL);
+    }
+
     setMessage() {
         this.message = 'Logged ' + (this.authService.isLoggedIn ? 'in' : 'out');
     }
@@ -45,9 +59,12 @@ export class LoginComponent {
         this.login(this.loginForm.controls['login'].value, this.loginForm.controls['password'].value);
     }
 
+    private showBadCredentials() {
+        this.badCredentials = true;
+    }
 
     login(login: string, password: string) {
-        this.authService.login(login, password).subscribe(
+        this.authService.login(login, password, this.apiURL + 'auth/login').subscribe(
             data => {
                 console.log("LoginComponent ok");
                 this.isLoggedIn = true
@@ -58,6 +75,7 @@ export class LoginComponent {
             },
             error => {
                 console.log("LoginComponent bad");
+                this.showBadCredentials();
                 this.isLoggedIn = false
             }
         );
