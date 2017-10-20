@@ -36,76 +36,33 @@ export class LoginComponent {
         });
     }
 
-
     setMessage() {
         this.message = 'Logged ' + (this.authService.isLoggedIn ? 'in' : 'out');
     }
 
     public onLoginFormSubmit() {
-        console.log("!!!");
         this.submitAttempt = true;
-        this.login();
+        this.login(this.loginForm.controls['login'].value, this.loginForm.controls['password'].value);
     }
-    /*
-    this.http.post('http://localhost:8001/auth/login', '{username:"user1", password:"letmein"}')
-    .map(res => res.json())
-    .subscribe(
-      // We're assuming the response will be an object
-      // with the JWT on an id_token key
-      data => console.log(data), //localStorage.setItem('id_token', data.id_token),
-      error => console.log(error)
-    );
-    */
 
-    login() {
-        this.message = 'Trying to log in ...';
 
-        this.authService.login().subscribe(
-            // We're assuming the response will be an object
-            // with the JWT on an id_token key
+    login(login: string, password: string) {
+        this.authService.login(login, password).subscribe(
             data => {
-                console.log("ok"); 
-                console.log(data); 
+                console.log("LoginComponent ok");
                 this.isLoggedIn = true
-                let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/';
-                
-                                // Redirect the user
-                                this.router.navigate([redirect]);                
-            },
-            error => {
-
-                console.log("bad"); 
-                console.log(error); 
-                console.log("auth error");
-                //this.isLoggedIn = false
-            }
-        );
-
-        /*
-        if (this.authService.login()) {
-                // Get the redirect URL from our auth service
-                // If no redirect has been set, use the default
-                let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/';
-                
-                                // Redirect the user
-                                this.router.navigate([redirect]);            
-        } else {
-            console.log("auth error");
-        }
-*/
-        /*
-        this.authService.login().subscribe(() => {
-            this.setMessage();
-            if (this.authService.isLoggedIn) {
-                // Get the redirect URL from our auth service
-                // If no redirect has been set, use the default
                 let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/';
 
                 // Redirect the user
                 this.router.navigate([redirect]);
+            },
+            error => {
+                console.log("LoginComponent bad");
+                this.isLoggedIn = false
             }
-        });
-        */
+        );
+
+
     }
 
     logout() {
