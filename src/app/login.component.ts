@@ -11,14 +11,15 @@ import { Angulartics2 } from 'angulartics2';
 })
 export class LoginComponent {
 
-    private loginFormModel: FormGroup;
-    private loginForm: FormGroup;
-    private submitAttempt = false;
+    public loginFormModel: FormGroup;
+    public loginForm: FormGroup;
+    public submitAttempt = false;
+    public badCredentials = false;
+    public message: string;
+
     private isLoggedIn = false;
-    private badCredentials = false;
-    private apiURL: string;
-    private message: string;
     private angulartics2: Angulartics2;
+    private apiURL: string;
 
     constructor(public authService: AuthService, private route: ActivatedRoute, public router: Router, formBuilder: FormBuilder, angulartics2: Angulartics2) {
         this.setMessage();
