@@ -798,3 +798,10 @@ div.columns ul li:first-child
 }
 
 div span .btn-link {color: #00839A;}
+
+nav.navbar-default {background-color: #fff;}
+nav.navbar-default nav.navbar-nav>.open>a, nav.navbar-default nav.navbar-nav>.open>a:hover, nav.navbar-default ul.navbar-nav>.open>a:focus, ul.navbar-nav>.open>.dropdown-menu  {background-color: #00839A;}
+#navbar-collapse-1 ul.navbar-nav {text-align: right;}
+ul.navbar-nav>.open>.dropdown-menu li a {color: #fff;}
+
+.navbar-default .navbar-brand {color: #444;}
