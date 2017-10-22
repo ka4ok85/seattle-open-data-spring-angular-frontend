@@ -9,7 +9,9 @@ import { AuthenticationResponse } from './core/models/authentication-response';
 
 @Injectable()
 export class AuthService {
-    isLoggedIn = false;
+    public isLoggedIn = false;
+
+    private user: string;
 
     // store the URL so we can redirect after logging in
     redirectUrl: string;
@@ -33,5 +35,9 @@ export class AuthService {
 
     logout(): void {
         this.isLoggedIn = false;
+    }
+
+    public getUser() {
+        return this.user;
     }
 }
