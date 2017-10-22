@@ -21,6 +21,11 @@
               <li [routerLinkActive]="['active']"><a href="#admin" [routerLink]="['/admin']">Admin</a></li>
             </ul>
           </div>
+          <div>
+            <div *ngIf="authService.isLoggedIn" class="text-right">
+              <span class="text-right">Hello, User&nbsp; <button (click)="authService.logout()" *ngIf="authService.isLoggedIn">Logout</button></span> 
+            </div>
+        </div>
           <!-- /.Navbar-collapse -->
         </div>
       </div>
