@@ -29,6 +29,7 @@ export class AuthService {
             .map(res => res.json())
             .map((res: AuthenticationResponse) => {
                 this.isLoggedIn = true;
+                this.user = res.login;
                 return Observable.of('token');
             });
     }
