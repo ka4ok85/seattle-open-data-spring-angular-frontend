@@ -23,7 +23,7 @@
           </div>
 
 
-          <div class="container-fluid">
+          <div class="container-fluid" *ngIf="authService.isLoggedIn">
               <div class="row">
                 <div class="col-lg-12">
                   <nav class="navbar navbar-default">
@@ -47,7 +47,7 @@
                             <ul class="dropdown-menu">
                               <li><a href="#">Edit</a>
                               </li>
-                              <li><a href="#">Logout</a>
+                              <li><a href="#" (click)="authService.logout()">Logout</a>
                               </li>
                             </ul>
                           </li>
@@ -61,13 +61,6 @@
                 </div>
               </div>
             </div>
-
-
-          <div>
-            <div *ngIf="authService.isLoggedIn" class="text-right">
-              <span class="text-left">Hello, {{authService.getUser()}} </span> <span class="text-right"><button (click)="authService.logout()" *ngIf="authService.isLoggedIn" class="btn btn-link btn-logout">Logout</button></span> 
-            </div>
-        </div>
           <!-- /.Navbar-collapse -->
         </div>
       </div>
