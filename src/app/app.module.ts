@@ -1,6 +1,7 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from "@angular/router";
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { HashLocationStrategy, LocationStrategy } from "@angular/common";
@@ -19,6 +20,7 @@ import { DateRangeFormComponent } from "./date-range-form-component.component";
 import { DateRangeQuickButtonsComponent } from "./date-range-quick-buttons";
 import { AuthGuard } from "./auth-guard.service";
 import { AuthService } from "./auth.service";
+import { UnauthorizedInterceptor } from "./core/interceptors/UnauthorizedInterceptor";
 
 import { HomeComponent } from "./home.component";
 import { ByTypeComponent } from "./by-type.component";
@@ -78,6 +80,7 @@ import { MyDatePickerModule } from 'mydatepicker';
   ],
   providers: [
     { provide: LocationStrategy, useClass: PathLocationStrategy },
+    { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true },
     Title,
     EnvironmentSpecificService,
     EnvironmentSpecificResolver,
