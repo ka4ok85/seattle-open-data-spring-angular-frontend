@@ -804,4 +804,4 @@ nav.navbar-default nav.navbar-nav>.open>a, nav.navbar-default nav.navbar-nav>.op
 #navbar-collapse-1 ul.navbar-nav {text-align: right;}
 ul.navbar-nav>.open>.dropdown-menu li a {color: #fff;}
 
-.navbar-default .navbar-brand {color: #444;}
+.navbar-default .navbar-brand, .navbar-default .navbar-brand:hover {color: #444; font-size: 14px; text-transform: uppercase;}
