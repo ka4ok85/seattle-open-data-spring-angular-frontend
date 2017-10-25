@@ -12,6 +12,7 @@ export class AuthService {
     public isLoggedIn = false;
 
     private user: string;
+    private role: string;
 
     // store the URL so we can redirect after logging in
     redirectUrl: string;
@@ -30,6 +31,7 @@ export class AuthService {
             .map((res: AuthenticationResponse) => {
                 this.isLoggedIn = true;
                 this.user = res.login;
+                this.role = res.role;
                 return Observable.of('token');
             });
     }
@@ -40,5 +42,9 @@ export class AuthService {
 
     public getUser() {
         return this.user;
+    }
+
+    public getRole() {
+        return this.role;
     }
 }
