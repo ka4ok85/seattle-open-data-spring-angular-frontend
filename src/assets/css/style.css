@@ -117,7 +117,8 @@ img.img-responsive {
 	letter-spacing: 1px;
     color: #444;
 	text-transform: uppercase;
-	font-weight: 700;
+    font-weight: 700;
+    padding-bottom: 10px;
 }
 
 .navbar-custom ul.nav li.active a {
@@ -799,11 +800,11 @@ div.columns ul li:first-child
 
 div span .btn-link {color: #00839A;}
 
-nav.navbar-default {background-color: #fff; min-height: unset;}
+nav.navbar-default {background-color: #fff; min-height: unset; padding-bottom: 5px;}
 nav.navbar-default nav.navbar-nav>.open>a, nav.navbar-default nav.navbar-nav>.open>a:hover, nav.navbar-default ul.navbar-nav>.open>a:focus, ul.navbar-nav>.open>.dropdown-menu  {background-color: #00839A;}
 #navbar-collapse-1 ul.navbar-nav {text-align: right;}
 ul.navbar-nav>.open>.dropdown-menu li a {color: #fff; padding: 0px;}
-ul.navbar-nav>li>a {padding-bottom: 5px; padding-top: 5px;}
-.navbar-default .navbar-brand, .navbar-default .navbar-brand:hover {color: #444; font-size: 14px; text-transform: uppercase; padding-bottom: 5px; padding-top: 5px;}
+nav.navbar-default ul.navbar-nav>li>a {padding-bottom: 0px; padding-top: 0px; font-weight: 700; line-height: normal; font-size: 14px;}
+.navbar-default .navbar-brand, .navbar-default .navbar-brand:hover {color: #444; font-size: 14px; text-transform: uppercase; padding-bottom: 5px; padding-top: 5px; height: auto; font-weight:700; line-height: normal;}
 
 
