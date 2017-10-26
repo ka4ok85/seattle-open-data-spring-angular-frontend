@@ -32,7 +32,7 @@ const routes: Routes = [
   },
 
   { path: 'about', component: AboutComponent },
-  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], resolve: { envSpecific: EnvironmentSpecificResolver }  },
   { path: 'login', component: LoginComponent, resolve: { envSpecific: EnvironmentSpecificResolver }  },
 ];
 
