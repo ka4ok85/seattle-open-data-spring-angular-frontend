@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 import { PathLocationStrategy } from "@angular/common";
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Angulartics2Module, Angulartics2GoogleAnalytics } from 'angulartics2';
@@ -70,6 +71,7 @@ import { MyDatePickerModule } from 'mydatepicker';
     routing,
     ChartsModule,
     HttpModule,
+    HttpClientModule,
     MyDatePickerModule,
     FormsModule,
     ReactiveFormsModule,
