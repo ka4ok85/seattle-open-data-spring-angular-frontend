@@ -16,10 +16,10 @@ import { DateRangeUtils } from "./core/services/date-range-utils.service";
 })
 
 export class ByZipComponent {
-    theDataSource: Observable<Object>;
-    apiURL: string;
-    days: Number;
-    busy: Promise<any>;
+    private theDataSource: Observable<Array<any>>;
+
+    private apiURL: string;
+    private busy: Promise<any>;
 
     public startDate;
     public endDate;
@@ -49,18 +49,16 @@ export class ByZipComponent {
     private getDataInternal(startDate: string, endDate: string) {
         this.startDate = startDate;
         this.endDate = endDate;
-        this.theDataSource = this.http.get(this.apiURL + 'calls/count/per-zip/' + startDate + '/' + endDate);
+
+        this.theDataSource = this.http.get<Array<any>>(this.apiURL + 'calls/count/per-zip/' + startDate + '/' + endDate);
         this.busy = this.theDataSource.toPromise();
-        //this.days = days;
         this.rawData = [];
 
         // Get the data from the REST server
         this.theDataSource.subscribe(
-            jsonData => {
+            data => {
                 let dataLabels: string[] = [];
                 let dataCounts: string[] = [];
-
-                const data = Object.keys(jsonData).map(it => jsonData[it])
 
                 for (let i = 0; i < data.length; i++) {
                     this.rawData.push([data[i][0], data[i][1]]);
