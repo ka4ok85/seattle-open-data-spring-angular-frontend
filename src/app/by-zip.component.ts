@@ -1,5 +1,4 @@
 import { Title } from '@angular/platform-browser';
-import { Http } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import { Observable } from "rxjs/Observable";
@@ -17,7 +16,6 @@ import { DateRangeUtils } from "./core/services/date-range-utils.service";
 })
 
 export class ByZipComponent {
-    //theDataSource: Observable<string>;
     theDataSource: Observable<Object>;
     apiURL: string;
     days: Number;
@@ -29,7 +27,7 @@ export class ByZipComponent {
     public barChartData: Array<any> = [{ data: [] }];
     public barChartLabels: string[] = [];
 
-    constructor(/*private http: Http*/private http: HttpClient, private route: ActivatedRoute, private dateRangeUtils: DateRangeUtils, private titleService: Title) {
+    constructor(private http: HttpClient, private route: ActivatedRoute, private dateRangeUtils: DateRangeUtils, private titleService: Title) {
 
     }
 
@@ -51,7 +49,6 @@ export class ByZipComponent {
     private getDataInternal(startDate: string, endDate: string) {
         this.startDate = startDate;
         this.endDate = endDate;
-        //this.theDataSource = this.http.get(this.apiURL + 'calls/count/per-zip/' + startDate + '/' + endDate).map(res => res.json());
         this.theDataSource = this.http.get(this.apiURL + 'calls/count/per-zip/' + startDate + '/' + endDate);
         this.busy = this.theDataSource.toPromise();
         //this.days = days;
@@ -62,10 +59,8 @@ export class ByZipComponent {
             jsonData => {
                 let dataLabels: string[] = [];
                 let dataCounts: string[] = [];
-                //console.log(data.valueOf());
+
                 const data = Object.keys(jsonData).map(it => jsonData[it])
-                //console.log(values);
-                //console.log(values.length);
 
                 for (let i = 0; i < data.length; i++) {
                     this.rawData.push([data[i][0], data[i][1]]);
