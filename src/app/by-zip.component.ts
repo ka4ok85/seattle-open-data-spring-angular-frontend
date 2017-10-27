@@ -59,10 +59,14 @@ export class ByZipComponent {
 
         // Get the data from the REST server
         this.theDataSource.subscribe(
-            data => {
+            jsonData => {
                 let dataLabels: string[] = [];
                 let dataCounts: string[] = [];
-/*
+                //console.log(data.valueOf());
+                const data = Object.keys(jsonData).map(it => jsonData[it])
+                //console.log(values);
+                //console.log(values.length);
+
                 for (let i = 0; i < data.length; i++) {
                     this.rawData.push([data[i][0], data[i][1]]);
                 }
@@ -88,7 +92,7 @@ export class ByZipComponent {
                     dataLabels.push(this.rawData[i][1]);
                     dataCounts.push(this.rawData[i][0]);
                 }
-*/
+
                 this.buildBarChart(dataLabels, dataCounts);
             },
             err => console.log("Can't get Counts. Error code: %s, URL: %s ", err.status, err.url),
