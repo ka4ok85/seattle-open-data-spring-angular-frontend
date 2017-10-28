@@ -1,7 +1,8 @@
 import { Title } from '@angular/platform-browser';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import { Observable } from "rxjs/Observable";
+import { Subscription } from 'rxjs';
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -16,18 +17,19 @@ import { DateRangeUtils } from "./core/services/date-range-utils.service";
 })
 
 export class ByTypeComponent {
-    theDataSource: Observable<string>;
-    apiURL: string;
-    days: Number;
-    busy: Promise<any>;
+    private theDataSource: Observable<Array<any>>;
+
+    private apiURL: string;
+    private busyData: Subscription;
+    private rawData = [];
 
     public startDate;
     public endDate;
-    public rawData = [];
+
     public barChartData: Array<any> = [{ data: [] }];
     public barChartLabels: string[] = [];
 
-    constructor(private http: Http, private route: ActivatedRoute, private dateRangeUtils: DateRangeUtils, private titleService: Title) {
+    constructor(private http: HttpClient, private route: ActivatedRoute, private dateRangeUtils: DateRangeUtils, private titleService: Title) {
     }
 
     ngOnInit() {
@@ -48,13 +50,11 @@ export class ByTypeComponent {
     private getDataInternal(startDate: string, endDate: string) {
         this.startDate = startDate;
         this.endDate = endDate;
-        this.theDataSource = this.http.get(this.apiURL + 'calls/count/per-type/' + startDate + '/' + endDate).map(res => res.json());
-        this.busy = this.theDataSource.toPromise();
-        //this.days = days;
+        this.theDataSource = this.http.get<Array<any>>(this.apiURL + 'calls/count/per-type/' + startDate + '/' + endDate);
         this.rawData = [];
 
         // Get the data from the REST server
-        this.theDataSource.subscribe(
+        this.busyData = this.theDataSource.subscribe(
             data => {
                 let dataLabels: string[] = [];
                 let dataCounts: string[] = [];
