@@ -2,6 +2,7 @@ import { Title } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import { Observable } from "rxjs/Observable";
+import { Subscription } from 'rxjs';
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -19,7 +20,7 @@ export class ByZipComponent {
     private theDataSource: Observable<Array<any>>;
 
     private apiURL: string;
-    private busy: Promise<any>;
+    private busyData: Subscription;
 
     public startDate;
     public endDate;
@@ -51,11 +52,10 @@ export class ByZipComponent {
         this.endDate = endDate;
 
         this.theDataSource = this.http.get<Array<any>>(this.apiURL + 'calls/count/per-zip/' + startDate + '/' + endDate);
-        this.busy = this.theDataSource.toPromise();
         this.rawData = [];
 
         // Get the data from the REST server
-        this.theDataSource.subscribe(
+        this.busyData = this.theDataSource.subscribe(
             data => {
                 let dataLabels: string[] = [];
                 let dataCounts: string[] = [];
