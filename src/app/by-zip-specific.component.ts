@@ -1,7 +1,8 @@
 import { Title } from '@angular/platform-browser';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import { Observable } from "rxjs/Observable";
+import { Subscription } from 'rxjs';
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -15,16 +16,15 @@ import { DateRangeUtils } from "./core/services/date-range-utils.service";
     styles: ['']
 })
 
-
 export class ByZipSpecificComponent {
+    private theDataSource: Observable<Array<any>>;
+    private thePieDataSource: Observable<Array<any>>;
 
-    zip: string;
-    theDataSource: Observable<string>;
-    thePieDataSource: Observable<string>;
-    apiURL: string;
-    days: Number;
-    busy: Promise<any>;
+    private apiURL: string;
+    private busyLineChart: Subscription;
+    private busyPieChart: Subscription;
 
+    public zip: string;
     public startDate;
     public endDate;
     public lineChartData: Array<any> = [{ data: [] }];
@@ -32,7 +32,7 @@ export class ByZipSpecificComponent {
     public pieChartLabels: String[] = [];
     public pieChartData: Array<any> = [{ data: [] }];
 
-    constructor(private http: Http, private route: ActivatedRoute, private dateRangeUtils: DateRangeUtils, private titleService: Title) {
+    constructor(private http: HttpClient, private route: ActivatedRoute, private dateRangeUtils: DateRangeUtils, private titleService: Title) {
         this.zip = route.snapshot.paramMap.get('zip');
     }
 
@@ -54,13 +54,11 @@ export class ByZipSpecificComponent {
     private getDataInternal(startDate: string, endDate: string) {
         this.startDate = startDate;
         this.endDate = endDate;
-        this.theDataSource = this.http.get(this.apiURL + 'calls/count/' + startDate + '/' + endDate + "?zip=" + this.zip).map(res => res.json());
-        this.thePieDataSource = this.http.get(this.apiURL + 'calls/count/per-type/' + startDate + '/' + endDate + "?zip=" + this.zip).map(res => res.json());
-        this.busy = this.theDataSource.toPromise();
-        //this.days = days;
+        this.theDataSource = this.http.get<Array<any>>(this.apiURL + 'calls/count/' + startDate + '/' + endDate + "?zip=" + this.zip);
+        this.thePieDataSource = this.http.get<Array<any>>(this.apiURL + 'calls/count/per-type/' + startDate + '/' + endDate + "?zip=" + this.zip);
 
         // Get the data from the REST server
-        this.theDataSource.subscribe(
+        this.busyLineChart = this.theDataSource.subscribe(
             data => {
                 let dataLabels: String[] = [];
                 let dataCounts: String[] = [];
@@ -75,7 +73,7 @@ export class ByZipSpecificComponent {
             () => console.log('Counts are retrieved')
         );
 
-        this.thePieDataSource.subscribe(
+        this.busyPieChart = this.thePieDataSource.subscribe(
             data => {
                 let dataLabels: String[] = [];
                 let dataCounts: String[] = [];
@@ -89,7 +87,6 @@ export class ByZipSpecificComponent {
             err => console.log("Can't get Radar Chart Counts. Error code: %s, URL: %s ", err.status, err.url),
             () => console.log('Radar Chart Counts are retrieved')
         );
-
     }
 
     /* CHARTS */
