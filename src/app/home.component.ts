@@ -1,7 +1,8 @@
 import { Title } from '@angular/platform-browser';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import { Observable } from "rxjs/Observable";
+import { Subscription } from 'rxjs';
 
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -18,11 +19,12 @@ import { IMyDpOptions, IMyOptions, IMyInputFieldChanged, IMyDate } from 'mydatep
 })
 
 export class HomeComponent {
-    theDataSource: Observable<string>;
-    thePieDataSource: Observable<string>;
-    apiURL: string;
-    days: Number;
-    busy: Promise<any>;
+    private theDataSource: Observable<Array<any>>;
+    private thePieDataSource: Observable<Array<any>>;
+
+    private apiURL: string;
+    private busyLineChartData: Subscription;
+    private busyPieChartData: Subscription;
 
     public startDate;
     public endDate;
@@ -31,7 +33,7 @@ export class HomeComponent {
     public pieChartLabels: String[] = [];
     public pieChartData: String[] = [];
 
-    constructor(private http: Http, private route: ActivatedRoute, private dateRangeUtils: DateRangeUtils, private titleService: Title) {
+    constructor(private http: HttpClient, private route: ActivatedRoute, private dateRangeUtils: DateRangeUtils, private titleService: Title) {
     }
 
     ngOnInit() {
@@ -52,12 +54,10 @@ export class HomeComponent {
     private getDataInternal(startDate: string, endDate: string) {
         this.startDate = startDate;
         this.endDate = endDate;
-        this.theDataSource = this.http.get(this.apiURL + 'calls/count/' + startDate + '/' + endDate).map(res => res.json());
-        this.thePieDataSource = this.http.get(this.apiURL + 'calls/count/per-type/' + startDate + '/' + endDate).map(res => res.json());
-        this.busy = this.theDataSource.toPromise();
-        //this.days = days;
+        this.theDataSource = this.http.get<Array<any>>(this.apiURL + 'calls/count/' + startDate + '/' + endDate);
+        this.thePieDataSource = this.http.get<Array<any>>(this.apiURL + 'calls/count/per-type/' + startDate + '/' + endDate);
 
-        this.theDataSource.subscribe(
+        this.busyLineChartData = this.theDataSource.subscribe(
             data => {
                 let dataLabels: String[] = [];
                 let dataCounts: String[] = [];
@@ -72,7 +72,7 @@ export class HomeComponent {
             () => console.log('Counts are retrieved')
         );
 
-        this.thePieDataSource.subscribe(
+        this.busyPieChartData = this.thePieDataSource.subscribe(
             data => {
                 let dataLabels: String[] = [];
                 let dataCounts: String[] = [];
