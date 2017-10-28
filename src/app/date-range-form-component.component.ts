@@ -1,4 +1,3 @@
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Observable } from "rxjs/Observable";
 
@@ -35,7 +34,7 @@ export class DateRangeFormComponent {
   public rangeForm: FormGroup;
   private angulartics2: Angulartics2;
 
-  constructor(private http: Http, private route: ActivatedRoute, formBuilder: FormBuilder, private dateRangeUtils: DateRangeUtils, angulartics2: Angulartics2) {
+  constructor(private route: ActivatedRoute, formBuilder: FormBuilder, private dateRangeUtils: DateRangeUtils, angulartics2: Angulartics2) {
     let date = new Date();
     let year = date.getFullYear();
     let month = date.getMonth();
