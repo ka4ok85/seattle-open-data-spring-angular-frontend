@@ -1,7 +1,8 @@
 import { Title } from '@angular/platform-browser';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import { Observable } from "rxjs/Observable";
+import { Subscription } from 'rxjs';
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -16,13 +17,14 @@ import { DateRangeUtils } from "./core/services/date-range-utils.service";
 })
 
 export class ByTypeSpecificComponent {
-    type: string;
-    theDataSource: Observable<string>;
-    theRadarDataSource: Observable<string>;
-    apiURL: string;
-    days: Number;
-    busy: Promise<any>;
+    private theDataSource: Observable<Array<any>>;
+    private theRadarDataSource: Observable<Array<any>>;
 
+    private apiURL: string;
+    private busyLineChart: Subscription;
+    private busyRadarChart: Subscription;
+
+    public type: string;
     public startDate;
     public endDate;
     public lineChartData: Array<any> = [{ data: [] }];
@@ -30,7 +32,7 @@ export class ByTypeSpecificComponent {
     public radarChartLabels: String[] = [];
     public radarChartData: Array<any> = [{ data: [] }];
 
-    constructor(private http: Http, private route: ActivatedRoute, private dateRangeUtils: DateRangeUtils, private titleService: Title) {
+    constructor(private http: HttpClient, private route: ActivatedRoute, private dateRangeUtils: DateRangeUtils, private titleService: Title) {
         this.type = route.snapshot.paramMap.get('type');
     }
 
@@ -52,13 +54,11 @@ export class ByTypeSpecificComponent {
     private getDataInternal(startDate: string, endDate: string) {
         this.startDate = startDate;
         this.endDate = endDate;
-        this.theDataSource = this.http.get(this.apiURL + 'calls/count/' + startDate + '/' + endDate + "?type=" + this.type).map(res => res.json());
-        this.theRadarDataSource = this.http.get(this.apiURL + 'calls/count/per-zip/' + startDate + '/' + endDate + "?type=" + this.type).map(res => res.json());
-        this.busy = this.theDataSource.toPromise();
-        //this.days = days;
+        this.theDataSource = this.http.get<Array<any>>(this.apiURL + 'calls/count/' + startDate + '/' + endDate + "?type=" + this.type);
+        this.theRadarDataSource = this.http.get<Array<any>>(this.apiURL + 'calls/count/per-zip/' + startDate + '/' + endDate + "?type=" + this.type);
 
         // Get the data from the REST server
-        this.theDataSource.subscribe(
+        this.busyLineChart = this.theDataSource.subscribe(
             data => {
                 let dataLabels: String[] = [];
                 let dataCounts: String[] = [];
@@ -72,7 +72,7 @@ export class ByTypeSpecificComponent {
             err => console.log("Can't get Counts. Error code: %s, URL: %s ", err.status, err.url)
         );
 
-        this.theRadarDataSource.subscribe(
+        this.busyRadarChart = this.theRadarDataSource.subscribe(
             data => {
                 let dataLabels: String[] = [];
                 let dataCounts: String[] = [];
