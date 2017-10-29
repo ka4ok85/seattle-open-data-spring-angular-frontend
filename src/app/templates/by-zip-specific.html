@@ -17,7 +17,7 @@
             <div class="col-md-8" style="min-width:700px">
                 <h3 style="margin-right:25px; text-align: right;"><a href="" [routerLink]="['/hourly', 'by-zip', zip]">See hourly breakdown &raquo;</a></h3>
                 <h3 class="text-center">Calls for zip code "{{zip}}" from <span class='blue'>{{startDate | date: 'MM/dd/yyyy'}}</span> to <span class='blue'>{{endDate | date: 'MM/dd/yyyy'}}</span></h3>
-                <div [ngBusy]="busy"></div>
+                <div [ngBusy]="busyLineChart"></div>
                 <div id="chart" style="position: relative; height:400px; width:700px">
                     <canvas baseChart id="baseChart" #baseChart width="700" height="400" [datasets]="lineChartData" [labels]="lineChartLabels"
                         [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"
@@ -34,7 +34,7 @@
         <div class="row">
             <div class="col-md-8">
                 <h3 class="text-center">Calls breakdown by Type for zip code "{{zip}}" from <span class='blue'>{{startDate | date: 'MM/dd/yyyy'}}</span>                    to <span class='blue'>{{endDate | date: 'MM/dd/yyyy'}}</span></h3>
-                <div [ngBusy]="busy"></div>
+                <div [ngBusy]="busyPieChart"></div>
                 <div id="pieChartContainer" style="position: relative; height:400px; width:700px">
                     <canvas baseChart id="pieChart" #pieChart width="700" height="400" [data]="pieChartData" [labels]="pieChartLabels" [options]="pieChartOptions"
                         [colors]="pieChartColors" [chartType]="pieChartType" (chartHover)="chartPieHovered($event)" (chartClick)="chartPieClicked($event)">>
