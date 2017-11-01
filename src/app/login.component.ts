@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Angulartics2 } from 'angulartics2';
+import "rxjs/add/operator/takeUntil";
+import { Subject } from "rxjs/Subject";
 
 @Component({
     templateUrl: './templates/login.html'
@@ -20,6 +22,7 @@ export class LoginComponent {
     private isLoggedIn = false;
     private angulartics2: Angulartics2;
     private apiURL: string;
+    private unsubscribe: Subject<boolean> = new Subject();
 
     constructor(public authService: AuthService, private route: ActivatedRoute, public router: Router, formBuilder: FormBuilder, angulartics2: Angulartics2) {
         this.setMessage();
@@ -46,6 +49,11 @@ export class LoginComponent {
             });
     }
 
+    public ngOnDestroy() {
+        this.unsubscribe.next();
+        this.unsubscribe.complete();
+    }
+
     setMessage() {
         this.message = 'Logged ' + (this.authService.isLoggedIn ? 'in' : 'out');
     }
@@ -60,7 +68,9 @@ export class LoginComponent {
     }
 
     login(login: string, password: string) {
-        this.authService.login(login, password, this.apiURL + 'auth/login').subscribe(
+        this.authService.login(login, password, this.apiURL + 'auth/login')
+            .takeUntil(this.unsubscribe)
+            .subscribe(
             data => {
                 console.log("LoginComponent ok");
                 this.isLoggedIn = true
@@ -74,7 +84,7 @@ export class LoginComponent {
                 this.showBadCredentials();
                 this.isLoggedIn = false
             }
-        );
+            );
     }
 
     logout() {
