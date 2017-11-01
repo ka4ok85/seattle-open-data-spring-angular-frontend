@@ -1,6 +1,8 @@
 import { Title } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
+import "rxjs/add/operator/takeUntil";
+import { Subject } from "rxjs/Subject";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from 'rxjs';
 
@@ -25,6 +27,7 @@ export class HomeComponent {
     private apiURL: string;
     private busyLineChartData: Subscription;
     private busyPieChartData: Subscription;
+    private unsubscribe: Subject<boolean> = new Subject();
 
     public startDate;
     public endDate;
@@ -38,12 +41,18 @@ export class HomeComponent {
 
     ngOnInit() {
         this.route.data
+            .takeUntil(this.unsubscribe)
             .subscribe((data: { envSpecific: EnvSpecific }) => {
                 this.titleService.setTitle(data.envSpecific.title + ' | Home');
                 this.apiURL = data.envSpecific.apiURL;
             });
 
         this.getData(30);
+    }
+
+    public ngOnDestroy() {
+        this.unsubscribe.next();
+        this.unsubscribe.complete();
     }
 
     public getData(days: number) {
@@ -57,7 +66,9 @@ export class HomeComponent {
         this.theDataSource = this.http.get<Array<any>>(this.apiURL + 'calls/count/' + startDate + '/' + endDate);
         this.thePieDataSource = this.http.get<Array<any>>(this.apiURL + 'calls/count/per-type/' + startDate + '/' + endDate);
 
-        this.busyLineChartData = this.theDataSource.subscribe(
+        this.busyLineChartData = this.theDataSource
+            .takeUntil(this.unsubscribe)
+            .subscribe(
             data => {
                 let dataLabels: String[] = [];
                 let dataCounts: String[] = [];
@@ -70,9 +81,11 @@ export class HomeComponent {
             },
             err => console.log("Can't get Counts. Error code: %s, URL: %s ", err.status, err.url),
             () => console.log('Counts are retrieved')
-        );
+            );
 
-        this.busyPieChartData = this.thePieDataSource.subscribe(
+        this.busyPieChartData = this.thePieDataSource
+            .takeUntil(this.unsubscribe)
+            .subscribe(
             data => {
                 let dataLabels: String[] = [];
                 let dataCounts: String[] = [];
