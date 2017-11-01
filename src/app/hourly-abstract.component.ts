@@ -1,4 +1,4 @@
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import { Observable } from "rxjs/Observable";
 
@@ -16,14 +16,12 @@ import { Subscription } from 'rxjs/Subscription';
 })
 
 export class HourlyAbstractComponent implements OnDestroy {
-    theDataSource: Observable<string>;
-    apiURL: string;
-    days: number;
-    busy: Promise<any>;
+    private theDataSource: Observable<Array<any>>;
+    private busyLineChartData: Subscription;
 
+    protected apiURL: string;
     protected dateRangeSubscription: Subscription;
     protected daysSubscription: Subscription;
-
     protected hourlyCountsApiURL: string;
 
     public startDate;
@@ -31,7 +29,8 @@ export class HourlyAbstractComponent implements OnDestroy {
     public rawData = [];
     public barChartData: Array<any> = [{ data: [] }];
     public barChartLabels: string[] = [];
-    constructor(protected http: Http, protected route: ActivatedRoute, protected dateRangeUtils: DateRangeUtils) { }
+
+    constructor(protected http: HttpClient, protected route: ActivatedRoute, protected dateRangeUtils: DateRangeUtils) { }
 
     public setHourlyCountsApiURL(dateRange: FormDateRange) { }
 
@@ -42,13 +41,11 @@ export class HourlyAbstractComponent implements OnDestroy {
     }
 
     private getDataInternal() {
-        this.theDataSource = this.http.get(this.hourlyCountsApiURL).map(res => res.json());
-        this.busy = this.theDataSource.toPromise();
-        //this.days = days;
+        this.theDataSource = this.http.get<Array<any>>(this.hourlyCountsApiURL);
         this.rawData = [];
 
         // Get the data from the REST server
-        this.theDataSource.subscribe(
+        this.busyLineChartData = this.theDataSource.subscribe(
             data => {
                 let dataLabels: string[] = [];
                 let dataCounts: string[] = [];
