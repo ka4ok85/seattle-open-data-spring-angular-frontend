@@ -1,6 +1,8 @@
 import { Title } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
+import "rxjs/add/operator/takeUntil";
+import { Subject } from "rxjs/Subject";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from 'rxjs';
 
@@ -21,6 +23,7 @@ export class ByZipComponent {
 
     private apiURL: string;
     private busyData: Subscription;
+    private unsubscribe: Subject<boolean> = new Subject();
 
     public startDate;
     public endDate;
@@ -34,12 +37,18 @@ export class ByZipComponent {
 
     ngOnInit() {
         this.route.data
+            .takeUntil(this.unsubscribe)
             .subscribe((data: { envSpecific: EnvSpecific }) => {
                 this.titleService.setTitle(data.envSpecific.title + ' | By Zip');
                 this.apiURL = data.envSpecific.apiURL;
             });
 
         this.getData(30);
+    }
+
+    public ngOnDestroy() {
+        this.unsubscribe.next();
+        this.unsubscribe.complete();
     }
 
     public getData(days: number) {
@@ -55,7 +64,9 @@ export class ByZipComponent {
         this.rawData = [];
 
         // Get the data from the REST server
-        this.busyData = this.theDataSource.subscribe(
+        this.busyData = this.theDataSource
+            .takeUntil(this.unsubscribe)
+            .subscribe(
             data => {
                 let dataLabels: string[] = [];
                 let dataCounts: string[] = [];
@@ -90,7 +101,7 @@ export class ByZipComponent {
             },
             err => console.log("Can't get Counts. Error code: %s, URL: %s ", err.status, err.url),
             () => console.log('Counts are retrieved')
-        );
+            );
 
     }
 
