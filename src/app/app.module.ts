@@ -35,6 +35,7 @@ import { HourlyByZipComponent } from "./hourly-by-zip.component";
 import { HourlyByTypeComponent } from "./hourly-by-type.component";
 import { AdminComponent } from "./admin.component";
 import { LoginComponent } from "./login.component";
+import { ProfileComponent } from "./profile.component";
 
 
 import { routing } from "./app.routing";
@@ -63,7 +64,8 @@ import { MyDatePickerModule } from 'mydatepicker';
     AdminComponent,
     DateRangeFormComponent,
     DateRangeQuickButtonsComponent,
-    LoginComponent
+    LoginComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
