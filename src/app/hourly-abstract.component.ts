@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
+import "rxjs/add/operator/takeUntil";
+import { Subject } from "rxjs/Subject";
 import { Observable } from "rxjs/Observable";
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -23,6 +25,7 @@ export class HourlyAbstractComponent implements OnDestroy {
     protected dateRangeSubscription: Subscription;
     protected daysSubscription: Subscription;
     protected hourlyCountsApiURL: string;
+    protected unsubscribe: Subject<boolean> = new Subject();
 
     public startDate;
     public endDate;
@@ -36,7 +39,7 @@ export class HourlyAbstractComponent implements OnDestroy {
 
     public getData(dateRange: FormDateRange) {
         this.startDate = dateRange.startDate;
-        this.endDate = dateRange.endDate; 
+        this.endDate = dateRange.endDate;
         this.getDataInternal();
     }
 
@@ -45,7 +48,9 @@ export class HourlyAbstractComponent implements OnDestroy {
         this.rawData = [];
 
         // Get the data from the REST server
-        this.busyLineChartData = this.theDataSource.subscribe(
+        this.busyLineChartData = this.theDataSource
+            .takeUntil(this.unsubscribe)
+            .subscribe(
             data => {
                 let dataLabels: string[] = [];
                 let dataCounts: string[] = [];
@@ -59,14 +64,13 @@ export class HourlyAbstractComponent implements OnDestroy {
             },
             err => console.log("Can't get Counts. Error code: %s, URL: %s ", err.status, err.url),
             () => console.log('Counts are retrieved')
-        );
+            );
 
     }
 
-    ngOnDestroy() {
-        // prevent memory leak when component destroyed
-        this.daysSubscription.unsubscribe();
-        this.dateRangeSubscription.unsubscribe();
+    public ngOnDestroy() {
+        this.unsubscribe.next();
+        this.unsubscribe.complete();
     }
 
     /* CHARTS */
