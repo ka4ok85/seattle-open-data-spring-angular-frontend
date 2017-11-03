@@ -12,6 +12,7 @@ import { AboutComponent } from "./about.component";
 import { AdminComponent } from "./admin.component";
 import { AuthGuard } from "./auth-guard.service";
 import { LoginComponent } from "./login.component";
+import { ProfileComponent } from "./profile.component";
 
 
 import { EnvironmentSpecificResolver } from './core/services/environment-specific-resolver.service';
@@ -32,8 +33,11 @@ const routes: Routes = [
   },
 
   { path: 'about', component: AboutComponent },
-  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], resolve: { envSpecific: EnvironmentSpecificResolver }  },
-  { path: 'login', component: LoginComponent, resolve: { envSpecific: EnvironmentSpecificResolver }  },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], resolve: { envSpecific: EnvironmentSpecificResolver } },
+  { path: 'login', component: LoginComponent, resolve: { envSpecific: EnvironmentSpecificResolver } },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], resolve: { envSpecific: EnvironmentSpecificResolver } },
+
+
 ];
 
 
