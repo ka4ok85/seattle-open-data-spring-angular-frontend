@@ -25,14 +25,18 @@ export class HourlyByTypeComponent extends HourlyAbstractComponent {
     constructor(protected http: HttpClient, protected route: ActivatedRoute, protected dateRangeUtils: DateRangeUtils, private dateUpdatesService: DateUpdatesService, private titleService: Title) {
         super(http, route, dateRangeUtils);
         this.type = route.snapshot.paramMap.get('type');
-        this.daysSubscription = dateUpdatesService.daysPassed$.subscribe(
+        this.daysSubscription = dateUpdatesService.daysPassed$
+            .takeUntil(this.unsubscribe)
+            .subscribe(
             days => {
                 let dateRange: FormDateRange = this.dateRangeUtils.getFormDateRangeForPastDays(days);
                 this.setHourlyCountsApiURL(dateRange);
                 this.getData(dateRange);
             });
 
-        this.dateRangeSubscription = dateUpdatesService.dateRangePassed$.subscribe(
+        this.dateRangeSubscription = dateUpdatesService.dateRangePassed$
+            .takeUntil(this.unsubscribe)
+            .subscribe(
             dateRange => {
                 this.setHourlyCountsApiURL(dateRange);
                 this.getData(dateRange);
@@ -41,6 +45,7 @@ export class HourlyByTypeComponent extends HourlyAbstractComponent {
 
     ngOnInit() {
         this.route.data
+            .takeUntil(this.unsubscribe)
             .subscribe((data: { envSpecific: EnvSpecific }) => {
                 this.titleService.setTitle(data.envSpecific.title + ' | Hourly By Type - ' + this.type);
                 this.apiURL = data.envSpecific.apiURL;
