@@ -1,5 +1,5 @@
 import { Title } from '@angular/platform-browser';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import { Observable } from "rxjs/Observable";
 
@@ -14,11 +14,11 @@ import { EnvSpecific } from 'app/core/models/env-specific';
 })
 
 export class AdminComponent {
-    theDataSource: Observable<string>;
-    apiURL: string;
+    private theDataSource: Observable<Array<any>>;
+    private apiURL: string;
 
 
-    constructor(private http: Http, private route: ActivatedRoute, private titleService: Title) {
+    constructor(private http: HttpClient, private route: ActivatedRoute, private titleService: Title) {
 
     }
 
@@ -33,7 +33,7 @@ export class AdminComponent {
     }
 
     private getData(days: number) {
-        this.theDataSource = this.http.get(this.apiURL + 'admin/data/').map(res => res.json());
+        this.theDataSource = this.http.get<Array<any>>(this.apiURL + 'admin/data/', { 'withCredentials': true });
 
         this.theDataSource.subscribe(
             data => {
