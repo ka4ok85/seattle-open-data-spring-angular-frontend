@@ -14,7 +14,7 @@ import { EnvSpecific } from 'app/core/models/env-specific';
 })
 
 export class ProfileComponent {
-    /*
+    
     private theDataSource: Observable<Array<any>>;
     private apiURL: string;
 
@@ -26,7 +26,7 @@ export class ProfileComponent {
     ngOnInit() {
         this.route.data
             .subscribe((data: { envSpecific: EnvSpecific }) => {
-                this.titleService.setTitle(data.envSpecific.title + ' | Admin');
+                this.titleService.setTitle(data.envSpecific.title + ' | Profile');
                 this.apiURL = data.envSpecific.apiURL;
             });
 
@@ -34,16 +34,16 @@ export class ProfileComponent {
     }
 
     private getData(days: number) {
-        this.theDataSource = this.http.get<Array<any>>(this.apiURL + 'admin/data/');
+        this.theDataSource = this.http.get<Array<any>>(this.apiURL + 'users/current', { 'withCredentials': true });
 
         this.theDataSource.subscribe(
             data => {
                 console.log(data);
 
             },
-            err => console.log("Can't get Admin Data. Error code: %s, URL: %s ", err.status, err.url),
-            () => console.log('Admin Data is retrieved')
+            err => console.log("Can't get Profile Data. Error code: %s, URL: %s ", err.status, err.url),
+            () => console.log('Profile Data is retrieved')
         );
     }
-    */
+    
 }
