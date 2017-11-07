@@ -1,6 +1,8 @@
 import { Title } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
+import "rxjs/add/operator/takeUntil";
+import { Subject } from "rxjs/Subject";
 import { Observable } from "rxjs/Observable";
 import { Subscription } from 'rxjs';
 
@@ -23,6 +25,7 @@ export class ByTypeSpecificComponent {
     private apiURL: string;
     private busyLineChart: Subscription;
     private busyRadarChart: Subscription;
+    private unsubscribe: Subject<boolean> = new Subject();
 
     public type: string;
     public startDate;
@@ -38,12 +41,18 @@ export class ByTypeSpecificComponent {
 
     ngOnInit() {
         this.route.data
+            .takeUntil(this.unsubscribe)
             .subscribe((data: { envSpecific: EnvSpecific }) => {
                 this.titleService.setTitle(data.envSpecific.title + ' | By Type - ' + this.type);
                 this.apiURL = data.envSpecific.apiURL;
             });
 
         this.getData(30);
+    }
+
+    public ngOnDestroy() {
+        this.unsubscribe.next();
+        this.unsubscribe.complete();
     }
 
     public getData(days: number) {
@@ -58,7 +67,9 @@ export class ByTypeSpecificComponent {
         this.theRadarDataSource = this.http.get<Array<any>>(this.apiURL + 'calls/count/per-zip/' + startDate + '/' + endDate + "?type=" + this.type);
 
         // Get the data from the REST server
-        this.busyLineChart = this.theDataSource.subscribe(
+        this.busyLineChart = this.theDataSource
+        .takeUntil(this.unsubscribe)
+        .subscribe(
             data => {
                 let dataLabels: String[] = [];
                 let dataCounts: String[] = [];
@@ -72,7 +83,9 @@ export class ByTypeSpecificComponent {
             err => console.log("Can't get Counts. Error code: %s, URL: %s ", err.status, err.url)
         );
 
-        this.busyRadarChart = this.theRadarDataSource.subscribe(
+        this.busyRadarChart = this.theRadarDataSource
+        .takeUntil(this.unsubscribe)
+        .subscribe(
             data => {
                 let dataLabels: String[] = [];
                 let dataCounts: String[] = [];
