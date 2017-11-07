@@ -1,11 +1,16 @@
 import { Title } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
+import "rxjs/add/operator/takeUntil";
 import { Observable } from "rxjs/Observable";
+import { Subscription } from 'rxjs';
+import { Subject } from "rxjs/Subject";
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EnvSpecific } from 'app/core/models/env-specific';
+
+import { UserPublic } from 'app/core/models/user-public';
 
 @Component({
     selector: '',
@@ -14,9 +19,11 @@ import { EnvSpecific } from 'app/core/models/env-specific';
 })
 
 export class ProfileComponent {
-    
-    private theDataSource: Observable<Array<any>>;
+
+    private theDataSource: Observable<UserPublic>;
     private apiURL: string;
+    private busyData: Subscription;
+    private unsubscribe: Subject<boolean> = new Subject();
 
 
     constructor(private http: HttpClient, private route: ActivatedRoute, private titleService: Title) {
@@ -25,6 +32,7 @@ export class ProfileComponent {
 
     ngOnInit() {
         this.route.data
+            .takeUntil(this.unsubscribe)
             .subscribe((data: { envSpecific: EnvSpecific }) => {
                 this.titleService.setTitle(data.envSpecific.title + ' | Profile');
                 this.apiURL = data.envSpecific.apiURL;
@@ -33,17 +41,22 @@ export class ProfileComponent {
         this.getData(30);
     }
 
+    public ngOnDestroy() {
+        this.unsubscribe.next();
+        this.unsubscribe.complete();
+    }
+
     private getData(days: number) {
-        this.theDataSource = this.http.get<Array<any>>(this.apiURL + 'users/current', { 'withCredentials': true });
-
-        this.theDataSource.subscribe(
-            data => {
+        this.theDataSource = this.http.get<UserPublic>(this.apiURL + 'users/current', { 'withCredentials': true });
+        this.theDataSource
+            .takeUntil(this.unsubscribe)
+            .subscribe(data => {
+                console.log(data.login);
                 console.log(data);
-
             },
             err => console.log("Can't get Profile Data. Error code: %s, URL: %s ", err.status, err.url),
             () => console.log('Profile Data is retrieved')
-        );
+            );
     }
-    
+
 }
